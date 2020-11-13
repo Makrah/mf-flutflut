@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testApp/main.dart';
+import 'package:mappin/main.dart';
 
 class MyAvatar extends StatefulWidget {
   MyAvatar({Key key}) : super(key: key);
@@ -25,7 +25,7 @@ class _MyAvatarState extends State<MyAvatar> {
         onPressed: _changeAvatar,
         child: CircleAvatar(
           radius: 50,
-          backgroundImage: AssetImage('assets/pic_$_imagePath.jpg'),
+          backgroundImage: AssetImage('assets/images/pic_$_imagePath.jpg'),
         ));
   }
 }

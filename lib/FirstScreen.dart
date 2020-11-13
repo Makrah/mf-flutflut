@@ -4,10 +4,11 @@ import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:testApp/MyAvatar.dart';
-import 'package:testApp/SecondScreen.dart';
-import 'package:testApp/main.dart';
+import 'package:mappin/MyAvatar.dart';
+import 'package:mappin/SecondScreen.dart';
+import 'package:mappin/main.dart';
 import 'package:http/http.dart' as http;
+import 'package:mappin/src/values/enums.dart';
 
 class FirstScreen extends StatefulWidget {
   FirstScreen({Key key}) : super(key: key);
@@ -52,9 +53,12 @@ class _FirstScreenState extends State<FirstScreen> {
     counter.getUserMe();
     counter.loginState.stream.listen((event) {
       if (event == LoginState.success) {
-        Navigator.pushNamed(context, "/second");
+        // Navigator.pushNamed(context, "/second");
       } else if (event == LoginState.error) {
-        EdgeAlert.show(context, title: 'Erreur', description: 'Identifiants invalids', gravity: EdgeAlert.TOP);
+        EdgeAlert.show(context,
+            title: 'Erreur',
+            description: 'Identifiants invalids',
+            gravity: EdgeAlert.TOP);
       }
     });
     // checkPermissions();
@@ -68,7 +72,7 @@ class _FirstScreenState extends State<FirstScreen> {
         children: [
           MyAvatar(),
           StreamBuilder(
-              stream: counter.count.stream,
+              stream: counter.username.stream,
               builder: (BuildContext context, AsyncSnapshot snap) {
                 return Text('${snap.data}');
               }),

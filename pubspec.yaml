@@ -1,4 +1,4 @@
-name: testApp
+name: mappin
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -32,6 +32,7 @@ dependencies:
   shared_preferences: ^0.5.2
   json_annotation: ^3.1.0
   json_serializable: ^3.5.0
+  flutter_svg: ^0.19.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -52,9 +53,31 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  fonts:
+    - family: Heebo
+      fonts:
+        - asset: assets/fonts/Heebo-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Heebo-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Heebo-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Heebo-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Heebo-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Heebo-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Heebo-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Heebo-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Heebo-Thin.ttf
+          weight: 100
+
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
+    - assets/images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

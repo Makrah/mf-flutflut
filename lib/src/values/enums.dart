@@ -1,0 +1,6 @@
+
+
+enum LoginState {
+  success,
+  error,
+}

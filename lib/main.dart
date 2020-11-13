@@ -1,28 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mappin/src/pages/LoginScreen.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:testApp/FirstScreen.dart';
-import 'package:testApp/SecondScreen.dart';
-import 'package:testApp/src/api/ApiService.dart';
-import 'package:testApp/src/api/Dto/LoginDto.dart';
-import 'package:testApp/src/services/LocalStorageService.dart';
+import 'package:mappin/FirstScreen.dart';
+import 'package:mappin/SecondScreen.dart';
+import 'package:mappin/src/api/ApiService.dart';
+import 'package:mappin/src/api/Dto/LoginDto.dart';
+import 'package:mappin/src/pages/SplashScreen.dart';
+import 'package:mappin/src/services/LocalStorageService.dart';
+import 'package:mappin/src/values/enums.dart';
+import 'package:mappin/src/values/theme.dart';
 
-enum LoginState {
-  success,
-  error,
-}
+import 'src/values/theme.dart';
+import 'src/values/theme.dart';
 
 class Counter {
   final ApiService apiService = ApiService();
 
   BehaviorSubject count = BehaviorSubject.seeded(0);
-  final loginState = PublishSubject<LoginState>(); // BehaviorSubject.seeded(0);
+  final loginState = PublishSubject<LoginState>();
+  final username = BehaviorSubject<String>.seeded("");
 
   void login() async {
     try {
       final resp = await apiService.login(LoginDto("mistralaix", "Test1234*"));
       print(resp.token);
+      username.add(resp.user.username);
       LocalStorageService.set(StorageKeys.token, resp.token);
       loginState.add(LoginState.success);
     } on DioError catch (error) {
@@ -65,25 +69,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: "/",
       routes: {
-        "/": (context) => FirstScreen(),
+        "/": (context) => SplashScreen(),
+        "/login": (context) => LoginScreen(),
+        "/first": (context) => FirstScreen(),
         "/second": (context) => SecondScreen(),
+        // Todo continuer ici
       },
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: theme,
+      darkTheme: themeDark,
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

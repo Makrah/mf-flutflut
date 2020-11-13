@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:testApp/src/api/Dto/GeoPointDto.dart';
+import 'package:mappin/src/api/Dto/GeoPointDto.dart';
 
 part 'PostDto.g.dart';
 

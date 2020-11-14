@@ -11,7 +11,8 @@ import 'package:mappin/src/pages/PostDetailScreen.dart';
 import 'package:mappin/src/pages/ProfileScreen.dart';
 import 'package:mappin/src/pages/SignupScreen.dart';
 import 'package:mappin/src/pages/SplashScreen.dart';
-import 'package:mappin/src/widgets/BottomNavigation.dart';
+import 'package:mappin/src/widgets/AdaptativeBottomNavigationScaffold.dart';
+import 'package:mappin/src/widgets/BottomNavigationTab.dart';
 import 'package:mappin/src/widgets/TabNavigator.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 
@@ -77,74 +78,92 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    final currentFlow = appFlows[_currentBarIndex];
-    // We're preventing the root navigator from popping and closing the app
-    // when the back button is pressed and the inner navigator can handle it.
-    // That occurs when the inner has more than one page on its stack.
-    // You can comment the onWillPop callback and watch "the bug".
-    return WillPopScope(
-      onWillPop: () async =>
-          !await currentFlow.navigatorKey.currentState.maybePop(),
-      child: Scaffold(
-        body: IndexedStack(
-          index: _currentBarIndex,
-          children: appFlows
-              .map(
-                _buildIndexedPageFlow,
-              )
-              .toList(),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: colors.smoothLabelColor,
-          unselectedLabelStyle: TextStyle(color: colors.smoothLabelColor),
-          selectedItemColor: Colors.white,
-          selectedLabelStyle: TextStyle(color: Colors.white),
-          backgroundColor: colors.backgroundColorDark,
-          currentIndex: _currentBarIndex,
-          items: appFlows
-              .map(
-                (flow) => BottomNavigationBarItem(
-                  label: flow.title,
-                  icon: SvgPicture.asset(
-                    flow.svgPath,
-                    color: _currentBarIndex == appFlows.indexOf(flow)
-                        ? Colors.white
-                        : colors.smoothLabelColor,
-                  ),
-                ),
-              )
-              .toList(),
-          onTap: (newIndex) => setState(
-            () {
-              if (_currentBarIndex != newIndex) {
-                _currentBarIndex = newIndex;
-              } else {
-                // If the user is re-selecting the tab, the common
-                // behavior is to empty the stack.
-                currentFlow.navigatorKey.currentState
-                    .popUntil((route) => route.isFirst);
-              }
-            },
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => AdaptiveBottomNavigationScaffold(
+        navigationBarItems: appFlows
+            // .map(
+            //   (flow) => BottomNavigationTab(
+            //       bottomNavigationBarItem: BottomNavigationBarItem(
+            //         title: Text(flow.title),
+            //         icon: Icon(flow.iconData),
+            //       ),
+            //       navigatorKey: flow.navigatorKey,
+            //       initialPageBuilder: (context) => IndexedPage(
+            //             index: 1,
+            //             backgroundColor: flow.mainColor,
+            //             containingFlowTitle: flow.title,
+            //           )),
+            // )
+            // .toList(),
+      );
 
-  Widget _buildIndexedPageFlow(AppFlow appFlow) {
-    return Navigator(
-      key: appFlow.navigatorKey,
-      onGenerateRoute: (RouteSettings settings) {
-        if (appFlow.routes[settings.name] == null) {
-          return MaterialPageRoute(
-              builder: appFlow.routes[appFlow.initialRouteKey],
-              settings: settings);
-        }
-        return MaterialPageRoute(
-            builder: appFlow.routes[settings.name], settings: settings);
-      },
-    );
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   final currentFlow = appFlows[_currentBarIndex];
+  //   // We're preventing the root navigator from popping and closing the app
+  //   // when the back button is pressed and the inner navigator can handle it.
+  //   // That occurs when the inner has more than one page on its stack.
+  //   // You can comment the onWillPop callback and watch "the bug".
+  //   return WillPopScope(
+  //     onWillPop: () async =>
+  //         !await currentFlow.navigatorKey.currentState.maybePop(),
+  //     child: Scaffold(
+  //       body: IndexedStack(
+  //         index: _currentBarIndex,
+  //         children: appFlows
+  //             .map(
+  //               _buildIndexedPageFlow,
+  //             )
+  //             .toList(),
+  //       ),
+  //       bottomNavigationBar: BottomNavigationBar(
+  //         unselectedItemColor: colors.smoothLabelColor,
+  //         unselectedLabelStyle: TextStyle(color: colors.smoothLabelColor),
+  //         selectedItemColor: Colors.white,
+  //         selectedLabelStyle: TextStyle(color: Colors.white),
+  //         backgroundColor: colors.backgroundColorDark,
+  //         currentIndex: _currentBarIndex,
+  //         items: appFlows
+  //             .map(
+  //               (flow) => BottomNavigationBarItem(
+  //                 label: flow.title,
+  //                 icon: SvgPicture.asset(
+  //                   flow.svgPath,
+  //                   color: _currentBarIndex == appFlows.indexOf(flow)
+  //                       ? Colors.white
+  //                       : colors.smoothLabelColor,
+  //                 ),
+  //               ),
+  //             )
+  //             .toList(),
+  //         onTap: (newIndex) => setState(
+  //           () {
+  //             if (_currentBarIndex != newIndex) {
+  //               _currentBarIndex = newIndex;
+  //             } else {
+  //               // If the user is re-selecting the tab, the common
+  //               // behavior is to empty the stack.
+  //               currentFlow.navigatorKey.currentState
+  //                   .popUntil((route) => route.isFirst);
+  //             }
+  //           },
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget _buildIndexedPageFlow(AppFlow appFlow) {
+  //   return Navigator(
+  //     key: appFlow.navigatorKey,
+  //     onGenerateRoute: (RouteSettings settings) {
+  //       if (appFlow.routes[settings.name] == null) {
+  //         return MaterialPageRoute(
+  //             builder: appFlow.routes[appFlow.initialRouteKey],
+  //             settings: settings);
+  //       }
+  //       return MaterialPageRoute(
+  //           builder: appFlow.routes[settings.name], settings: settings);
+  //     },
+  //   );
+  // }
 }

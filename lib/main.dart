@@ -12,6 +12,7 @@ import 'package:mappin/src/pages/PostDetailScreen.dart';
 import 'package:mappin/src/pages/ProfileScreen.dart';
 import 'package:mappin/src/pages/SignupScreen.dart';
 import 'package:mappin/src/values/themeiOS.dart';
+import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:mappin/FirstScreen.dart';
 import 'package:mappin/SecondScreen.dart';
@@ -21,6 +22,7 @@ import 'package:mappin/src/pages/SplashScreen.dart';
 import 'package:mappin/src/services/LocalStorageService.dart';
 import 'package:mappin/src/values/enums.dart';
 import 'package:mappin/src/values/themeAndroid.dart';
+import 'package:mappin/src/values/routes.dart' as Routes;
 
 import 'src/values/themeAndroid.dart';
 import 'src/values/themeAndroid.dart';
@@ -68,6 +70,7 @@ GetIt getIt = new GetIt.asNewInstance();
 
 void main() {
   getIt.registerSingleton(Counter());
+  getIt.registerSingleton(LoginViewModel());
   runApp(MyApp());
 }
 
@@ -76,16 +79,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routes = {
-      "/": (context) => SplashScreen(),
-      "/login": (context) => LoginScreen(),
-      "/signup": (context) => SignupScreen(),
-      "/home": (context) => HomeScreen(),
-      "/profile": (context) => ProfileScreen(),
-      "/createPost": (context) => CreatePostScreen(),
-      "/map": (context) => MapScreen(),
-      "/postDetail": (context) => PostDetailScreen(),
+      Routes.splash: (context) => SplashScreen(),
+      Routes.login: (context) => LoginScreen(),
+      Routes.signup: (context) => SignupScreen(),
+      Routes.home: (context) => HomeScreen(),
+      Routes.profile: (context) => ProfileScreen(),
+      Routes.createPost: (context) => CreatePostScreen(),
+      Routes.map: (context) => MapScreen(),
+      Routes.postDetail: (context) => PostDetailScreen(),
     };
-    final initialRoute = "/";
+    final initialRoute = Routes.splash;
     final title = "Flutter Demo";
     if (Platform.isIOS) {
       return CupertinoApp(

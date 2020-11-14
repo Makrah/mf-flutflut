@@ -1,15 +1,22 @@
+import 'dart:async';
 import 'dart:ui';
 
+import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mappin/main.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
+import 'package:mappin/src/values/enums.dart';
 import 'package:mappin/src/values/font.dart' as fonts;
+import 'package:mappin/src/viewModels/LoginViewModel.dart';
+import 'package:mappin/src/widgets/DisposableWidget.dart';
 import 'package:mappin/src/widgets/login/LoginTextFieldWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
 import 'package:mappin/src/widgets/platforms/PlatformTextField.dart';
+import 'package:mappin/src/values/routes.dart' as Routes;
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -18,23 +25,46 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
   final _controllerUsername = TextEditingController();
   final _controllerPassword = TextEditingController();
+  LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
 
   @override
   void initState() {
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) => this.onWidgetBuild());
   }
 
   void onWidgetBuild() {
-    Navigator.pushNamed(context, "/second");
+    _loginViewModel.loginState.stream.listen((event) {
+      switch (event) {
+        case LoginState.success:
+          break;
+        case LoginState.error:
+          EdgeAlert.show(
+            context,
+            title: 'Erreur',
+            description: 'Identifiants invalids',
+            gravity: EdgeAlert.TOP,
+            backgroundColor: colors.alerterErrorColor,
+          );
+          break;
+        default:
+      }
+    }).canceledBy(this);
+    _loginViewModel.authState.stream.listen((event) {
+      if (event == AuthState.authent) {
+        Navigator.of(context, rootNavigator: true)
+              .pushReplacementNamed(Routes.home);
+      }
+    }).canceledBy(this);
   }
 
   @override
   void dispose() {
     super.dispose();
-    print("bbbbbb");
+    cancelSubscriptions();
   }
 
   @override
@@ -137,8 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       onPress: () {
-                        print("-----------> ${_controllerUsername.text}");
-                        Navigator.pushNamed(context, "/signup");
+                        _loginViewModel.login(
+                            _controllerUsername.text, _controllerPassword.text);
                       },
                     ),
                   ),
@@ -160,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     onPress: () {
-                      print("-----------> ${_controllerPassword.text}");
+                      Navigator.pushNamed(context, "/signup");
                     },
                   ),
                 ),

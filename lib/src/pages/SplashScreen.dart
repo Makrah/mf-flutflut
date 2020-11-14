@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:mappin/main.dart';
+import 'package:mappin/src/values/enums.dart';
+import 'package:mappin/src/viewModels/LoginViewModel.dart';
+import 'package:mappin/src/widgets/DisposableWidget.dart';
+import 'package:mappin/src/values/routes.dart' as Routes;
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key key}) : super(key: key);
@@ -8,7 +13,9 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with DisposableWidget {
+  LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
+
   @override
   void initState() {
     super.initState();
@@ -16,14 +23,24 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void onWidgetBuild() {
-    // Navigator.pushNamed(context, "/login");
-    Navigator.pushNamed(context, "/home");
+    _loginViewModel.getAuthState();
+    _loginViewModel.authState.stream.listen((event) {
+      switch (event) {
+        case AuthState.unauthent:
+          Navigator.pushReplacementNamed(context, Routes.login);
+          break;
+        case AuthState.authent:
+          Navigator.pushReplacementNamed(context, Routes.home);
+          break;
+        default:
+      }
+    }).canceledBy(this);
   }
 
   @override
   void dispose() {
     super.dispose();
-    print("bbbbbb");
+    cancelSubscriptions();
   }
 
   @override

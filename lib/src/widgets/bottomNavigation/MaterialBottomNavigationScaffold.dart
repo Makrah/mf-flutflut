@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mappin/src/pages/HomeScreen.dart';
-import 'package:mappin/src/widgets/BottomNavigationTab.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
+import 'package:mappin/src/widgets/bottomNavigation/AppFlow.dart';
 
 class MaterialBottomNavigationScaffold extends StatelessWidget {
   const MaterialBottomNavigationScaffold({
-    @required this.navigationBarItems,
+    @required this.appFlows,
     @required this.onItemSelected,
     @required this.selectedIndex,
     Key key,
-  })  : assert(navigationBarItems != null),
+  })  : assert(appFlows != null),
         assert(onItemSelected != null),
         assert(selectedIndex != null),
         super(key: key);
 
   /// List of the tabs to be displayed with their respective navigator's keys.
-  final List<AppFlow> navigationBarItems;
+  final List<AppFlow> appFlows;
 
   /// Called when a tab selection occurs.
   final ValueChanged<int> onItemSelected;
@@ -30,7 +30,7 @@ class MaterialBottomNavigationScaffold extends StatelessWidget {
         // the selected one.
         body: IndexedStack(
           index: selectedIndex,
-          children: navigationBarItems
+          children: appFlows
               .map(
                 (barItem) => _buildIndexedPageFlow(barItem),
               )
@@ -43,13 +43,13 @@ class MaterialBottomNavigationScaffold extends StatelessWidget {
           selectedLabelStyle: TextStyle(color: Colors.white),
           backgroundColor: colors.backgroundColorDark,
           currentIndex: selectedIndex,
-          items: navigationBarItems
+          items: appFlows
               .map(
                 (flow) => BottomNavigationBarItem(
                   label: flow.title,
                   icon: SvgPicture.asset(
                     flow.svgPath,
-                    color: selectedIndex == navigationBarItems.indexOf(flow)
+                    color: selectedIndex == appFlows.indexOf(flow)
                         ? Colors.white
                         : colors.smoothLabelColor,
                   ),

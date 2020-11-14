@@ -4,7 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mappin/src/pages/CreatePostScreen.dart';
+import 'package:mappin/src/pages/HomeScreen.dart';
 import 'package:mappin/src/pages/LoginScreen.dart';
+import 'package:mappin/src/pages/MapScreen.dart';
+import 'package:mappin/src/pages/PostDetailScreen.dart';
+import 'package:mappin/src/pages/ProfileScreen.dart';
 import 'package:mappin/src/pages/SignupScreen.dart';
 import 'package:mappin/src/values/themeiOS.dart';
 import 'package:rxdart/subjects.dart';
@@ -74,9 +79,11 @@ class MyApp extends StatelessWidget {
       "/": (context) => SplashScreen(),
       "/login": (context) => LoginScreen(),
       "/signup": (context) => SignupScreen(),
-      "/first": (context) => FirstScreen(),
-      "/second": (context) => SecondScreen(),
-      // Todo continuer ici
+      "/home": (context) => HomeScreen(),
+      "/profile": (context) => ProfileScreen(),
+      "/createPost": (context) => CreatePostScreen(),
+      "/map": (context) => MapScreen(),
+      "/postDetail": (context) => PostDetailScreen(),
     };
     final initialRoute = "/";
     final title = "Flutter Demo";

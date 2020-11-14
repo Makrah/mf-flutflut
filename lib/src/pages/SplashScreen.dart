@@ -16,7 +16,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void onWidgetBuild() {
-    Navigator.pushNamed(context, "/login");
+    // Navigator.pushNamed(context, "/login");
+    Navigator.pushNamed(context, "/home");
   }
 
   @override

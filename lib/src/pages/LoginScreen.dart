@@ -1,6 +1,13 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mappin/src/values/colors.dart' as colors;
+import 'package:mappin/src/values/font.dart' as fonts;
+import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
+import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
+import 'package:mappin/src/widgets/platforms/PlatformTextField.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -10,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _controllerUsername = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -27,10 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       body: SafeArea(
         child: Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.all(30),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,61 +48,94 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   "Mappin",
                   style: TextStyle(
-                      fontFamily: "Heebo",
-                      fontWeight: FontWeight.w900,
-                      fontSize: 42),
+                    fontFamily: fonts.primaryFF,
+                    color: colors.labelColor,
+                    fontWeight: fonts.black,
+                    fontSize: 42,
+                  ),
                 ),
               ),
-              Text(
-                "Welcome!",
-                style: TextStyle(
-                    fontFamily: "Heebo",
-                    fontWeight: FontWeight.w900,
-                    fontSize: 42),
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                child: Text(
+                  "Welcome!",
+                  style: TextStyle(
+                    fontFamily: fonts.primaryFF,
+                    color: colors.labelColor,
+                    fontWeight: fonts.black,
+                    fontSize: 42,
+                  ),
+                ),
               ),
               Text(
                 "Sign in to continue",
                 style: TextStyle(
-                    fontFamily: "Heebo",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24),
+                  fontFamily: fonts.primaryFF,
+                  color: colors.smoothLabelColor,
+                  fontWeight: fonts.medium,
+                  fontSize: 24,
+                ),
               ),
-              Row(
+              Column(
                 children: [
-                  SvgPicture.asset("assets/images/tf_username.svg",
-                      semanticsLabel: 'Acme Logo'),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Username",
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset("assets/images/tf_username.svg"),
+                        SizedBox(width: 20),
+                        Expanded(
+                            child: PlatformTextField(
+                          placeholder: "Username",
+                          controller: _controllerUsername,
+                        )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 40),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: PlatformButton(
+                        color: colors.primaryTransparentColor,
+                        height: 60,
+                        borderRadius: 12,
+                        child: Text(
+                          "Sign in",
+                          style: TextStyle(
+                            fontFamily: fonts.primaryFF,
+                            color: colors.labelColor,
+                            fontWeight: fonts.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        onPress: () {
+                          print("-----------> ${_controllerUsername.text}");
+                        },
                       ),
+                      // child: CupertinoButton(
+                      //   color: colors.primaryTransparentColor,
+                      //   minSize: 60,
+                      //   child: Text(
+                      //     "Sign in",
+                      //     style: TextStyle(
+                      //       fontFamily: fonts.primaryFF,
+                      //       color: colors.labelColor,
+                      //       fontWeight: fonts.bold,
+                      //       fontSize: 16,
+                      //     ),
+                      //   ),
+                      //   onPressed: () {
+                      //     print("-----------> ${_controllerUsername.text}");
+                      //   },
+                      //   borderRadius: BorderRadius.circular(12),
+                      // ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: FlatButton(
-                      onPressed: () {
-                        print("a");
-                      },
-                      child: Text("Sign in"),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: FlatButton(
-                      onPressed: () {
-                        print("a");
-                      },
-                      child: Text("Create an account"),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

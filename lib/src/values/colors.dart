@@ -4,8 +4,10 @@ final Color accentColor = Color(0xFFFFC542);
 
 final Color primaryColor = Color(0xFF40DF9F);
 final Color primaryColorDark = Color(0xFF40DF9F);
+final Color primaryTransparentColor = Color(0x8040DF9F);
 
 final Color labelColor = Color(0xFFFFFFFF);
+final Color smoothLabelColor = Color(0xFF96A7AF);
 final Color backgroundColor = Color(0xFF22343C);
 final Color backgroundColorDark = Color(0xFF22343C);
 

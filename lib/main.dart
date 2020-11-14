@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mappin/src/pages/LoginScreen.dart';
+import 'package:mappin/src/values/themeiOS.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:mappin/FirstScreen.dart';
 import 'package:mappin/SecondScreen.dart';
@@ -10,10 +14,10 @@ import 'package:mappin/src/api/Dto/LoginDto.dart';
 import 'package:mappin/src/pages/SplashScreen.dart';
 import 'package:mappin/src/services/LocalStorageService.dart';
 import 'package:mappin/src/values/enums.dart';
-import 'package:mappin/src/values/theme.dart';
+import 'package:mappin/src/values/themeAndroid.dart';
 
-import 'src/values/theme.dart';
-import 'src/values/theme.dart';
+import 'src/values/themeAndroid.dart';
+import 'src/values/themeAndroid.dart';
 
 class Counter {
   final ApiService apiService = ApiService();
@@ -65,19 +69,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final routes = {
+      "/": (context) => SplashScreen(),
+      "/login": (context) => LoginScreen(),
+      "/first": (context) => FirstScreen(),
+      "/second": (context) => SecondScreen(),
+      // Todo continuer ici
+    };
+    final initialRoute = "/";
+    final title = "Flutter Demo";
+    if (Platform.isIOS) {
+      return CupertinoApp(
+        routes: routes,
+        initialRoute: initialRoute,
+        title: title,
+        theme: themeiOS,
+      );
+    }
     return MaterialApp(
-      title: 'Flutter Demo',
-      initialRoute: "/",
-      routes: {
-        "/": (context) => SplashScreen(),
-        "/login": (context) => LoginScreen(),
-        "/first": (context) => FirstScreen(),
-        "/second": (context) => SecondScreen(),
-        // Todo continuer ici
-      },
+      title: title,
+      initialRoute: initialRoute,
+      routes: routes,
       theme: theme,
       darkTheme: themeDark,
-      // home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

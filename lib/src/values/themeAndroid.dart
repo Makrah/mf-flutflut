@@ -9,9 +9,16 @@ final ThemeData theme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   textTheme: TextTheme(
     headline1: TextStyle(
+        fontFamily: "Heebo", fontWeight: FontWeight.w900, fontSize: 42),
+    headline2: TextStyle(
       fontFamily: "Heebo",
-      fontWeight: FontWeight.w900,
+      fontWeight: FontWeight.w400,
+      fontSize: 24,
     ),
+    headline3: TextStyle(
+        fontFamily: "Heebo", fontWeight: FontWeight.w700, fontSize: 16),
+    bodyText1: TextStyle(
+        fontFamily: "Heebo", fontWeight: FontWeight.w400, fontSize: 14),
   ).apply(
     bodyColor: colors.labelColor,
     displayColor: colors.labelColor,
@@ -20,7 +27,24 @@ final ThemeData theme = ThemeData(
       color: colors.backgroundColor,
       iconTheme: IconThemeData(color: colors.accentColor)),
   buttonTheme: ButtonThemeData(
-      buttonColor: colors.accentColor, disabledColor: colors.primaryColor),
+    buttonColor: colors.accentColor,
+    disabledColor: colors.primaryColor,
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    labelStyle: TextStyle(
+      fontSize: 16,
+      fontFamily: "Heebo",
+      color: colors.labelColor,
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: colors.smoothLabelColor),
+    ),
+    hintStyle: TextStyle(
+      fontSize: 16,
+      fontFamily: "Heebo",
+      color: colors.smoothLabelColor,
+    ),
+  ),
 );
 
 final ThemeData themeDark = ThemeData(

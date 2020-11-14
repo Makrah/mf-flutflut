@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mappin/src/pages/LoginScreen.dart';
+import 'package:mappin/src/pages/SignupScreen.dart';
 import 'package:mappin/src/values/themeiOS.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:mappin/FirstScreen.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
     final routes = {
       "/": (context) => SplashScreen(),
       "/login": (context) => LoginScreen(),
+      "/signup": (context) => SignupScreen(),
       "/first": (context) => FirstScreen(),
       "/second": (context) => SecondScreen(),
       // Todo continuer ici

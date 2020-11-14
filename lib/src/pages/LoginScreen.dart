@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
@@ -48,25 +49,37 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: Text(
-                    "Mappin",
-                    style: TextStyle(
-                      fontFamily: fonts.primaryFF,
-                      color: colors.labelColor,
-                      fontWeight: fonts.black,
-                      fontSize: 42,
+                  child: Hero(
+                    tag: "MappinTitle",
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: Text(
+                        "Mappin",
+                        style: TextStyle(
+                          fontFamily: fonts.primaryFF,
+                          color: colors.labelColor,
+                          fontWeight: fonts.black,
+                          fontSize: 42,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 50),
-                  child: Text(
-                    "Welcome!",
-                    style: TextStyle(
-                      fontFamily: fonts.primaryFF,
-                      color: colors.labelColor,
-                      fontWeight: fonts.black,
-                      fontSize: 42,
+                Hero(
+                  tag: "ScreenTitle",
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 50),
+                      child: Text(
+                        "Welcome!",
+                        style: TextStyle(
+                          fontFamily: fonts.primaryFF,
+                          color: colors.labelColor,
+                          fontWeight: fonts.black,
+                          fontSize: 42,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -81,37 +94,53 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Column(
                   children: [
-                    LoginTextFieldWidget(
-                      controllerUsername: _controllerUsername,
-                      placeholder: "Username",
-                      svgPath: "assets/images/tf_username.svg",
+                    Hero(
+                      tag: "tfUsername",
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: LoginTextFieldWidget(
+                          controllerUsername: _controllerUsername,
+                          placeholder: "Username",
+                          svgPath: "assets/images/tf_username.svg",
+                        ),
+                      ),
                     ),
-                    LoginTextFieldWidget(
-                      controllerUsername: _controllerPassword,
-                      placeholder: "Password",
-                      svgPath: "assets/images/tf_password.svg",
+                    Hero(
+                      tag: "tfPassword",
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: LoginTextFieldWidget(
+                          controllerUsername: _controllerPassword,
+                          placeholder: "Password",
+                          svgPath: "assets/images/tf_password.svg",
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 40),
                   width: double.infinity,
-                  child: PlatformButton(
-                    color: colors.primaryColor,
-                    height: 60,
-                    borderRadius: 12,
-                    child: Text(
-                      "Sign in",
-                      style: TextStyle(
-                        fontFamily: fonts.primaryFF,
-                        color: colors.labelColor,
-                        fontWeight: fonts.bold,
-                        fontSize: 16,
+                  child: Hero(
+                    tag: "bAction",
+                    child: PlatformButton(
+                      color: colors.primaryColor,
+                      height: 60,
+                      borderRadius: 12,
+                      child: Text(
+                        "Sign in",
+                        style: TextStyle(
+                          fontFamily: fonts.primaryFF,
+                          color: colors.labelColor,
+                          fontWeight: fonts.bold,
+                          fontSize: 16,
+                        ),
                       ),
+                      onPress: () {
+                        print("-----------> ${_controllerUsername.text}");
+                        Navigator.pushNamed(context, "/signup");
+                      },
                     ),
-                    onPress: () {
-                      print("-----------> ${_controllerUsername.text}");
-                    },
                   ),
                 ),
                 Container(

@@ -8,9 +8,10 @@ class PlatformButton extends PlatformWidget<CupertinoButton, FlatButton> {
   final Color color;
   final double height;
   final double borderRadius;
+  final double horizontalPadding;
 
   PlatformButton(
-      {this.onPress, this.child, this.color, this.height, this.borderRadius});
+      {this.onPress, this.child, this.color, this.height, this.borderRadius, this.horizontalPadding = 16});
 
   @override
   FlatButton createAndroidWidget(BuildContext context) {
@@ -30,6 +31,7 @@ class PlatformButton extends PlatformWidget<CupertinoButton, FlatButton> {
   @override
   CupertinoButton createIosWidget(BuildContext context) {
     return CupertinoButton(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       color: color,
       minSize: height,
       borderRadius: BorderRadius.circular(borderRadius),

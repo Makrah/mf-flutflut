@@ -2,26 +2,24 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/font.dart' as fonts;
 import 'package:mappin/src/widgets/login/LoginTextFieldWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
-import 'package:mappin/src/widgets/platforms/PlatformTextField.dart';
 
 class SignupScreen extends StatefulWidget {
-  SignupScreen({Key key}) : super(key: key);
+  const SignupScreen({Key key}) : super(key: key);
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final _controllerUsername = TextEditingController();
-  final _controllerPassword = TextEditingController();
-  final _controllerConfirmPassword = TextEditingController();
+  final TextEditingController _controllerUsername = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerConfirmPassword = TextEditingController();
 
   @override
   void initState() {
@@ -29,13 +27,13 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void onWidgetBuild() {
-    Navigator.pushNamed(context, "/second");
+    Navigator.pushNamed(context, '/second');
   }
 
   @override
   void dispose() {
     super.dispose();
-    print("bbbbbb");
+    print('bbbbbb');
   }
 
   @override
@@ -44,18 +42,18 @@ class _SignupScreenState extends State<SignupScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
-            margin: EdgeInsets.all(30),
+            margin: const EdgeInsets.all(30),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
+              children: <Widget>[
+                const Center(
                   child: Hero(
-                    tag: "MappinTitle",
+                    tag: 'MappinTitle',
                     child: Material(
                       type: MaterialType.transparency,
                       child: Text(
-                        "Mappin",
+                        'Mappin',
                         style: TextStyle(
                           fontFamily: fonts.primaryFF,
                           color: colors.labelColor,
@@ -67,13 +65,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 Hero(
-                  tag: "ScreenTitle",
+                  tag: 'ScreenTitle',
                   child: Material(
                     type: MaterialType.transparency,
                     child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      child: Text(
-                        "Signup",
+                      margin: const EdgeInsets.only(top: 50),
+                      child: const Text(
+                        'Signup',
                         style: TextStyle(
                           fontFamily: fonts.primaryFF,
                           color: colors.labelColor,
@@ -85,49 +83,49 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 Column(
-                  children: [
+                  children: <Widget>[
                     Hero(
-                      tag: "tfUsername",
+                      tag: 'tfUsername',
                       child: Material(
                         type: MaterialType.transparency,
                         child: LoginTextFieldWidget(
                           controllerUsername: _controllerUsername,
-                          placeholder: "Username",
-                          svgPath: "assets/images/tf_username.svg",
+                          placeholder: 'Username',
+                          svgPath: 'assets/images/tf_username.svg',
                         ),
                       ),
                     ),
                     Hero(
-                      tag: "tfPassword",
+                      tag: 'tfPassword',
                       child: Material(
                         type: MaterialType.transparency,
                         child: LoginTextFieldWidget(
                           controllerUsername: _controllerPassword,
-                          placeholder: "Password",
-                          svgPath: "assets/images/tf_password.svg",
+                          placeholder: 'Password',
+                          svgPath: 'assets/images/tf_password.svg',
                         ),
                       ),
                     ),
                     LoginTextFieldWidget(
                       controllerUsername: _controllerConfirmPassword,
-                      placeholder: "Confirm Password",
-                      svgPath: "assets/images/tf_password.svg",
+                      placeholder: 'Confirm Password',
+                      svgPath: 'assets/images/tf_password.svg',
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 40),
+                  margin: const EdgeInsets.symmetric(vertical: 40),
                   width: double.infinity,
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(right: 20),
+                        margin: const EdgeInsets.only(right: 20),
                         child: PlatformButton(
                           color: colors.primaryTransparentColor,
                           height: 60,
                           borderRadius: 12,
                           child:
-                              SvgPicture.asset("assets/images/arrow_back.svg"),
+                              SvgPicture.asset('assets/images/arrow_back.svg'),
                           onPress: () {
                             Navigator.pop(context);
                           },
@@ -135,13 +133,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       Expanded(
                         child: Hero(
-                          tag: "bAction",
+                          tag: 'bAction',
                           child: PlatformButton(
                             color: colors.primaryColor,
                             height: 60,
                             borderRadius: 12,
-                            child: Text(
-                              "Next",
+                            child: const Text(
+                              'Next',
                               style: TextStyle(
                                 fontFamily: fonts.primaryFF,
                                 color: colors.labelColor,
@@ -150,7 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                             onPress: () {
-                              print("-----------> ${_controllerUsername.text}");
+                              print('-----------> ${_controllerUsername.text}');
                             },
                           ),
                         ),

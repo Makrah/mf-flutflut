@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
+import 'package:flutter/material.dart';
 
 abstract class PlatformWidget<I extends Widget, A extends Widget>
     extends StatelessWidget {
@@ -11,7 +11,7 @@ abstract class PlatformWidget<I extends Widget, A extends Widget>
       return createIosWidget(context);
     }
     // platform not supported returns an empty widget
-    return new Container();
+    return Container();
   }
 
   I createIosWidget(BuildContext context);

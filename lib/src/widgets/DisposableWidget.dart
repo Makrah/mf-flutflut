@@ -1,21 +1,21 @@
 import 'dart:async';
 
 class DisposableWidget {
-  List<StreamSubscription> _subscriptions = [];
+  final List<StreamSubscription<dynamic>> _subscriptions = <StreamSubscription<dynamic>>[];
 
   void cancelSubscriptions() {
-    _subscriptions.forEach((subscription) {
+    for (final StreamSubscription<dynamic> subscription in _subscriptions) {
       subscription.cancel();
-    });
+    }
   }
 
-  void addSubscription(StreamSubscription subscription) {
+  void addSubscription(StreamSubscription<dynamic> subscription) {
     _subscriptions.add(subscription);
   }
 }
 
-extension DisposableStreamSubscriton on StreamSubscription {
-    void canceledBy(DisposableWidget widget) {
-        widget.addSubscription(this);
-    }
+extension DisposableStreamSubscriton on StreamSubscription<dynamic> {
+  void canceledBy(DisposableWidget widget) {
+    widget.addSubscription(this);
+  }
 }

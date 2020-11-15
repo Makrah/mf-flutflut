@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:mappin/src/widgets/platforms/PlatformWidget.dart';
 
 class PlatformScaffold extends PlatformWidget<CupertinoPageScaffold, Scaffold> {
+  PlatformScaffold({this.appBar, this.body});
+
   final Widget appBar;
   final Widget body;
-
-  PlatformScaffold({this.appBar, this.body});
 
   @override
   Scaffold createAndroidWidget(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: appBar as PreferredSizeWidget,
       body: body,
     );
   }
@@ -19,7 +19,7 @@ class PlatformScaffold extends PlatformWidget<CupertinoPageScaffold, Scaffold> {
   @override
   CupertinoPageScaffold createIosWidget(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: appBar,
+      navigationBar: appBar as ObstructingPreferredSizeWidget,
       child: body,
     );
   }

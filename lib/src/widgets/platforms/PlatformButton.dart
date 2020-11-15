@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:mappin/src/widgets/platforms/PlatformWidget.dart';
 
 class PlatformButton extends PlatformWidget<CupertinoButton, FlatButton> {
+  PlatformButton(
+      {this.onPress, this.child, this.color, this.height, this.borderRadius, this.horizontalPadding = 16});
+
   final Function onPress;
   final Widget child;
   final Color color;
   final double height;
   final double borderRadius;
   final double horizontalPadding;
-
-  PlatformButton(
-      {this.onPress, this.child, this.color, this.height, this.borderRadius, this.horizontalPadding = 16});
 
   @override
   FlatButton createAndroidWidget(BuildContext context) {

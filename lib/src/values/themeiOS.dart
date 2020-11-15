@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'colors.dart' as colors;
 
-final CupertinoThemeData themeiOS = CupertinoThemeData(
+const CupertinoThemeData themeiOS = CupertinoThemeData(
     primaryColor: colors.primaryColor,
     scaffoldBackgroundColor: colors.backgroundColor,
     primaryContrastingColor: colors.accentColor,
     textTheme: CupertinoTextThemeData(
       textStyle: TextStyle(
-        fontFamily: "Heebo",
+        fontFamily: 'Heebo',
       ),
     )
     // visualDensity: VisualDensity.adaptivePlatformDensity,

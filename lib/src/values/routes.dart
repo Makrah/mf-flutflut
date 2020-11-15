@@ -1,9 +1,8 @@
-
-final String splash = "/";
-final String login = "/login";
-final String signup = "/signup";
-final String home = "/home";
-final String profile = "/profile";
-final String createPost = "/createPost";
-final String map = "/map";
-final String postDetail = "/postDetail";
+const String splash = '/';
+const String login = '/login';
+const String signup = '/signup';
+const String home = '/home';
+const String profile = '/profile';
+const String createPost = '/createPost';
+const String map = '/map';
+const String postDetail = '/postDetail';

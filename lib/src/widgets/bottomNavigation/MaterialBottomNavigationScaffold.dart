@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mappin/src/pages/HomeScreen.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/widgets/bottomNavigation/AppFlow.dart';
 
@@ -32,20 +31,20 @@ class MaterialBottomNavigationScaffold extends StatelessWidget {
           index: selectedIndex,
           children: appFlows
               .map(
-                (barItem) => _buildIndexedPageFlow(barItem),
+                (AppFlow barItem) => _buildIndexedPageFlow(barItem),
               )
               .toList(),
         ),
         bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: colors.smoothLabelColor,
-          unselectedLabelStyle: TextStyle(color: colors.smoothLabelColor),
+          unselectedLabelStyle: const TextStyle(color: colors.smoothLabelColor),
           selectedItemColor: Colors.white,
-          selectedLabelStyle: TextStyle(color: Colors.white),
+          selectedLabelStyle: const TextStyle(color: Colors.white),
           backgroundColor: colors.backgroundColorDark,
           currentIndex: selectedIndex,
           items: appFlows
               .map(
-                (flow) => BottomNavigationBarItem(
+                (AppFlow flow) => BottomNavigationBarItem(
                   label: flow.title,
                   icon: SvgPicture.asset(
                     flow.svgPath,
@@ -65,11 +64,11 @@ class MaterialBottomNavigationScaffold extends StatelessWidget {
       key: appFlow.navigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         if (appFlow.routes[settings.name] == null) {
-          return MaterialPageRoute(
+          return MaterialPageRoute<dynamic>(
               builder: appFlow.routes[appFlow.initialRouteKey],
               settings: settings);
         }
-        return MaterialPageRoute(
+        return MaterialPageRoute<dynamic>(
             builder: appFlow.routes[settings.name], settings: settings);
       },
     );

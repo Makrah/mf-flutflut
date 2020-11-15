@@ -1,10 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StorageKeys {
-  static final String token = "TOKEN";
+mixin StorageKeys {
+  static const String token = 'TOKEN';
 }
 
-class LocalStorageService {
+mixin LocalStorageService {
   static SharedPreferences _prefs;
 
   static Future<dynamic> _getInstance() async => _prefs = await SharedPreferences.getInstance();
@@ -14,14 +14,14 @@ class LocalStorageService {
     return _prefs.getString(key);
   }
 
-  static void set(String key, dynamic value) async {
+  static Future<void> set(String key, String value) async {
     await _getInstance();
-    _prefs.setString(key, value);
+    await _prefs.setString(key, value);
   }
 
-  static void remove(String key) async {
+  static Future<void> remove(String key) async {
     await _getInstance();
-    _prefs.remove(key);
+    await _prefs.remove(key);
   }
 }
 

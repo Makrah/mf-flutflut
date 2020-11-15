@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-final Color accentColor = Color(0xFFFFC542);
+const Color accentColor = Color(0xFFFFC542);
 
-final Color primaryColor = Color(0xFF40DF9F);
-final Color primaryColorDark = Color(0xFF40DF9F);
-final Color primaryTransparentColor = Color(0x8040DF9F);
+const Color primaryColor = Color(0xFF40DF9F);
+const Color primaryColorDark = Color(0xFF40DF9F);
+const Color primaryTransparentColor = Color(0x8040DF9F);
 
-final Color labelColor = Color(0xFFFFFFFF);
-final Color smoothLabelColor = Color(0xFF96A7AF);
-final Color backgroundColor = Color(0xFF22343C);
-final Color backgroundColorDark = Color(0xFF22343C);
+const Color labelColor = Color(0xFFFFFFFF);
+const Color smoothLabelColor = Color(0xFF96A7AF);
+const Color backgroundColor = Color(0xFF22343C);
+const Color backgroundColorDark = Color(0xFF22343C);
 
-final Color commentBg = Color(0xFF96A7AF);
-final Color postCellBg = Color(0xFF30444E);
-final Color canvasColor = Colors.transparent;
+const Color commentBg = Color(0xFF96A7AF);
+const Color postCellBg = Color(0xFF30444E);
+const Color canvasColor = Colors.transparent;
 
-final Color alerterErrorColor = Colors.red;
-final Color alerterSuccessColor = Colors.green;
-final Color alerterInfoColor = Colors.grey;
+const Color alerterErrorColor = Colors.red;
+const Color alerterSuccessColor = Colors.green;
+const Color alerterInfoColor = Colors.grey;

@@ -7,17 +7,17 @@ import 'package:lottie/lottie.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
 
 class MapScreen extends StatefulWidget {
-  MapScreen({Key key}) : super(key: key);
+  const MapScreen({Key key}) : super(key: key);
 
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   AnimationController _controllerLottie;
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
+  static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
@@ -42,7 +42,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Stack(
-          children: [
+          children: <Widget>[
             GoogleMap(
               mapType: MapType.normal,
               initialCameraPosition: _kGooglePlex,
@@ -63,9 +63,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                   child: Lottie.asset(
                     'assets/animations/focus_animation.json',
                     controller: _controllerLottie,
-                    onLoaded: (composition) {
+                    onLoaded: (LottieComposition composition) {
                       _controllerLottie.duration = composition.duration;
-                      _controllerLottie.addStatusListener((status) {
+                      _controllerLottie.addStatusListener((AnimationStatus status) {
                         if (status == AnimationStatus.completed) {
                           _controllerLottie.reset();
                         }

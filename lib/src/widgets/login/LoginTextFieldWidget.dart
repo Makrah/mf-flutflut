@@ -20,11 +20,11 @@ class LoginTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
+      margin: const EdgeInsets.symmetric(vertical: 20),
       child: Row(
-        children: [
+        children: <Widget>[
           SvgPicture.asset(_svgPath),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           Expanded(
             child: PlatformTextField(
               placeholder: _placeholder,

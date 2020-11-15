@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mappin/src/pages/HomeScreen.dart';
 import 'package:mappin/src/widgets/bottomNavigation/AppFlow.dart';
 import 'package:mappin/src/widgets/bottomNavigation/CupertinoBottomNavigationScaffold.dart';
 import 'package:mappin/src/widgets/bottomNavigation/MaterialBottomNavigationScaffold.dart';
@@ -59,7 +58,7 @@ class _AdaptiveBottomNavigationScaffoldState
       // If the user is re-selecting the tab, the common
       // behavior is to empty the stack.
       widget.appFlows[newIndex].navigatorKey.currentState
-          .popUntil((route) => route.isFirst);
+          .popUntil((Route<dynamic> route) => route.isFirst);
     }
     setState(() {
       _currentlySelectedIndex = newIndex;

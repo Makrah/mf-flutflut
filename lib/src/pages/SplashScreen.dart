@@ -4,33 +4,33 @@ import 'package:mappin/main.dart';
 import 'package:mappin/src/values/enums.dart';
 import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
-import 'package:mappin/src/values/routes.dart' as Routes;
+import 'package:mappin/src/values/routes.dart' as app_routes;
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({Key key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> with DisposableWidget {
-  LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
+  final LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) => this.onWidgetBuild());
+    SchedulerBinding.instance.addPostFrameCallback((_) => onWidgetBuild());
   }
 
   void onWidgetBuild() {
     _loginViewModel.getAuthState();
-    _loginViewModel.authState.stream.listen((event) {
+    _loginViewModel.authState.stream.listen((AuthState event) {
       switch (event) {
         case AuthState.unauthent:
-          Navigator.pushReplacementNamed(context, Routes.login);
+          Navigator.pushReplacementNamed(context, app_routes.login);
           break;
         case AuthState.authent:
-          Navigator.pushReplacementNamed(context, Routes.home);
+          Navigator.pushReplacementNamed(context, app_routes.home);
           break;
         default:
       }
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> with DisposableWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/splash_screen.png'),
                 fit: BoxFit.cover)),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mappin/main.dart';
@@ -12,7 +10,7 @@ import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
 import 'package:mappin/src/widgets/bottomNavigation/AdaptativeBottomNavigationScaffold.dart';
 import 'package:mappin/src/widgets/bottomNavigation/AppFlow.dart';
-import 'package:mappin/src/values/routes.dart' as Routes;
+import 'package:mappin/src/values/routes.dart' as app_routes;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,36 +18,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with DisposableWidget {
-  LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
-  final List<AppFlow> appFlows = [
+  final LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
+  final List<AppFlow> appFlows = <AppFlow>[
     AppFlow(
       title: 'Profile',
-      svgPath: "assets/images/icon_tab_profile.svg",
-      initialRouteKey: Routes.profile,
-      routes: {
-        Routes.profile: (context) => ProfileScreen(),
-        Routes.postDetail: (context) => PostDetailScreen(),
+      svgPath: 'assets/images/icon_tab_profile.svg',
+      initialRouteKey: app_routes.profile,
+      routes: <String, StatefulWidget Function(dynamic)>{
+        app_routes.profile: (dynamic context) => const ProfileScreen(),
+        app_routes.postDetail: (dynamic context) => const PostDetailScreen(),
       },
       mainColor: Colors.red,
       navigatorKey: GlobalKey<NavigatorState>(),
     ),
     AppFlow(
       title: 'Camera',
-      svgPath: "assets/images/icon_tab_camera.svg",
-      initialRouteKey: Routes.createPost,
-      routes: {
-        Routes.createPost: (context) => CreatePostScreen(),
+      svgPath: 'assets/images/icon_tab_camera.svg',
+      initialRouteKey: app_routes.createPost,
+      routes: <String, StatefulWidget Function(dynamic)>{
+        app_routes.createPost: (dynamic context) => const CreatePostScreen(),
       },
       mainColor: Colors.green,
       navigatorKey: GlobalKey<NavigatorState>(),
     ),
     AppFlow(
       title: 'Map',
-      svgPath: "assets/images/icon_tab_map.svg",
-      initialRouteKey: Routes.map,
-      routes: {
-        Routes.map: (context) => MapScreen(),
-        Routes.postDetail: (context) => PostDetailScreen(),
+      svgPath: 'assets/images/icon_tab_map.svg',
+      initialRouteKey: app_routes.map,
+      routes: <String, StatefulWidget Function(dynamic)>{
+        app_routes.map: (dynamic context) => const MapScreen(),
+        app_routes.postDetail: (dynamic context) => const PostDetailScreen(),
       },
       mainColor: Colors.green,
       navigatorKey: GlobalKey<NavigatorState>(),
@@ -59,14 +57,14 @@ class _HomeScreenState extends State<HomeScreen> with DisposableWidget {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) => this.onWidgetBuild());
+    SchedulerBinding.instance.addPostFrameCallback((_) => onWidgetBuild());
   }
 
   void onWidgetBuild() {
-    _loginViewModel.authState.stream.listen((event) {
+    _loginViewModel.authState.stream.listen((AuthState event) {
       if (event == AuthState.unauthent) {
         Navigator.of(context, rootNavigator: true)
-            .pushReplacementNamed(Routes.login);
+            .pushReplacementNamed(app_routes.login);
       }
     }).canceledBy(this);
   }
@@ -77,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with DisposableWidget {
     cancelSubscriptions();
   }
 
+  @override
   Widget build(BuildContext context) =>
       AdaptiveBottomNavigationScaffold(appFlows: appFlows);
 }

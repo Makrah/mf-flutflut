@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PostDetailScreen extends StatefulWidget {
-  PostDetailScreen({Key key}) : super(key: key);
+  const PostDetailScreen({Key key}) : super(key: key);
 
   @override
   _PostDetailScreenState createState() => _PostDetailScreenState();
@@ -15,11 +15,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
         body: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
+            children: <Widget>[
               Hero(
-                tag: "test",
+                tag: 'test',
                 child: FlatButton(
-                  child: Text("Go back"),
+                  child: const Text('Go back'),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: false).pop();
                   },

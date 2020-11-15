@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mappin/src/pages/HomeScreen.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/widgets/bottomNavigation/AppFlow.dart';
 
@@ -35,7 +34,7 @@ class CupertinoBottomNavigationScaffold extends StatelessWidget {
           activeColor: CupertinoColors.white,
           items: appFlows
               .map(
-                (flow) => BottomNavigationBarItem(
+                (AppFlow flow) => BottomNavigationBarItem(
                   label: flow.title,
                   icon: SvgPicture.asset(
                     flow.svgPath,
@@ -48,7 +47,7 @@ class CupertinoBottomNavigationScaffold extends StatelessWidget {
               .toList(),
           onTap: onItemSelected,
         ),
-        tabBuilder: (context, index) {
+        tabBuilder: (BuildContext context, int index) {
           return _buildIndexedPageFlow(appFlows[index]);
         },
       );
@@ -58,11 +57,11 @@ class CupertinoBottomNavigationScaffold extends StatelessWidget {
       navigatorKey: appFlow.navigatorKey,
       onGenerateRoute: (RouteSettings settings) {
         if (appFlow.routes[settings.name] == null) {
-          return CupertinoPageRoute(
+          return CupertinoPageRoute<dynamic>(
               builder: appFlow.routes[appFlow.initialRouteKey],
               settings: settings);
         }
-        return CupertinoPageRoute(
+        return CupertinoPageRoute<dynamic>(
             builder: appFlow.routes[settings.name], settings: settings);
       },
     );

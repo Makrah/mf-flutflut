@@ -1,11 +1,9 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mappin/main.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/enums.dart';
@@ -15,29 +13,28 @@ import 'package:mappin/src/widgets/DisposableWidget.dart';
 import 'package:mappin/src/widgets/login/LoginTextFieldWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
-import 'package:mappin/src/widgets/platforms/PlatformTextField.dart';
-import 'package:mappin/src/values/routes.dart' as Routes;
+import 'package:mappin/src/values/routes.dart' as app_routes;
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
-  final _controllerUsername = TextEditingController();
-  final _controllerPassword = TextEditingController();
-  LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
+  final TextEditingController _controllerUsername = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) => this.onWidgetBuild());
+    SchedulerBinding.instance.addPostFrameCallback((_) => onWidgetBuild());
   }
 
   void onWidgetBuild() {
-    _loginViewModel.loginState.stream.listen((event) {
+    _loginViewModel.loginState.stream.listen((LoginState event) {
       switch (event) {
         case LoginState.success:
           break;
@@ -53,10 +50,10 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
         default:
       }
     }).canceledBy(this);
-    _loginViewModel.authState.stream.listen((event) {
+    _loginViewModel.authState.stream.listen((AuthState event) {
       if (event == AuthState.authent) {
         Navigator.of(context, rootNavigator: true)
-              .pushReplacementNamed(Routes.home);
+            .pushReplacementNamed(app_routes.home);
       }
     }).canceledBy(this);
   }
@@ -73,18 +70,18 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
-            margin: EdgeInsets.all(30),
+            margin: const EdgeInsets.all(30),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
+              children: <Widget>[
+                const Center(
                   child: Hero(
-                    tag: "MappinTitle",
+                    tag: 'MappinTitle',
                     child: Material(
                       type: MaterialType.transparency,
                       child: Text(
-                        "Mappin",
+                        'Mappin',
                         style: TextStyle(
                           fontFamily: fonts.primaryFF,
                           color: colors.labelColor,
@@ -96,13 +93,13 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                   ),
                 ),
                 Hero(
-                  tag: "ScreenTitle",
+                  tag: 'ScreenTitle',
                   child: Material(
                     type: MaterialType.transparency,
                     child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      child: Text(
-                        "Welcome!",
+                      margin: const EdgeInsets.only(top: 50),
+                      child: const Text(
+                        'Welcome!',
                         style: TextStyle(
                           fontFamily: fonts.primaryFF,
                           color: colors.labelColor,
@@ -113,8 +110,8 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                     ),
                   ),
                 ),
-                Text(
-                  "Sign in to continue",
+                const Text(
+                  'Sign in to continue',
                   style: TextStyle(
                     fontFamily: fonts.primaryFF,
                     color: colors.smoothLabelColor,
@@ -123,42 +120,42 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                   ),
                 ),
                 Column(
-                  children: [
+                  children: <Widget>[
                     Hero(
-                      tag: "tfUsername",
+                      tag: 'tfUsername',
                       child: Material(
                         type: MaterialType.transparency,
                         child: LoginTextFieldWidget(
                           controllerUsername: _controllerUsername,
-                          placeholder: "Username",
-                          svgPath: "assets/images/tf_username.svg",
+                          placeholder: 'Username',
+                          svgPath: 'assets/images/tf_username.svg',
                         ),
                       ),
                     ),
                     Hero(
-                      tag: "tfPassword",
+                      tag: 'tfPassword',
                       child: Material(
                         type: MaterialType.transparency,
                         child: LoginTextFieldWidget(
                           controllerUsername: _controllerPassword,
-                          placeholder: "Password",
-                          svgPath: "assets/images/tf_password.svg",
+                          placeholder: 'Password',
+                          svgPath: 'assets/images/tf_password.svg',
                         ),
                       ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 40),
+                  margin: const EdgeInsets.symmetric(vertical: 40),
                   width: double.infinity,
                   child: Hero(
-                    tag: "bAction",
+                    tag: 'bAction',
                     child: PlatformButton(
                       color: colors.primaryColor,
                       height: 60,
                       borderRadius: 12,
-                      child: Text(
-                        "Sign in",
+                      child: const Text(
+                        'Sign in',
                         style: TextStyle(
                           fontFamily: fonts.primaryFF,
                           color: colors.labelColor,
@@ -174,14 +171,14 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 20),
                   width: double.infinity,
                   child: PlatformButton(
                     color: colors.primaryTransparentColor,
                     height: 60,
                     borderRadius: 12,
-                    child: Text(
-                      "Create an account",
+                    child: const Text(
+                      'Create an account',
                       style: TextStyle(
                         fontFamily: fonts.primaryFF,
                         color: colors.labelColor,
@@ -190,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                       ),
                     ),
                     onPress: () {
-                      Navigator.pushNamed(context, "/signup");
+                      Navigator.pushNamed(context, '/signup');
                     },
                   ),
                 ),

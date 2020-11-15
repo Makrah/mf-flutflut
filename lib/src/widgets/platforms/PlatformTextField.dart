@@ -5,16 +5,16 @@ import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/font.dart' as fonts;
 
 class PlatformTextField extends PlatformWidget<CupertinoTextField, TextField> {
+  PlatformTextField({this.controller, this.placeholder});
+
   final TextEditingController controller;
   final String placeholder;
-
-  PlatformTextField({this.controller, this.placeholder});
 
   @override
   TextField createAndroidWidget(BuildContext context) {
     return TextField(
       controller: controller,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: fonts.primaryFF,
         color: colors.smoothLabelColor,
         fontWeight: fonts.medium,
@@ -22,12 +22,12 @@ class PlatformTextField extends PlatformWidget<CupertinoTextField, TextField> {
       ),
       decoration: InputDecoration(
         hintText: placeholder,
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           fontFamily: fonts.primaryFF,
           fontSize: 16,
           color: colors.smoothLabelColor,
         ),
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: colors.smoothLabelColor,
           ),
@@ -41,7 +41,7 @@ class PlatformTextField extends PlatformWidget<CupertinoTextField, TextField> {
     return CupertinoTextField(
       controller: controller,
       placeholder: placeholder,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: fonts.primaryFF,
         color: colors.smoothLabelColor,
         fontWeight: fonts.medium,

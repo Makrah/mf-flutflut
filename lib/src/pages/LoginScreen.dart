@@ -12,6 +12,7 @@ import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
 import 'package:mappin/src/widgets/login/LoginTextFieldWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
+import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
 import 'package:mappin/src/values/routes.dart' as app_routes;
 
@@ -150,23 +151,43 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                   width: double.infinity,
                   child: Hero(
                     tag: 'bAction',
-                    child: PlatformButton(
-                      color: colors.primaryColor,
-                      height: 60,
-                      borderRadius: 12,
-                      child: const Text(
-                        'Sign in',
-                        style: TextStyle(
-                          fontFamily: fonts.primaryFF,
-                          color: colors.labelColor,
-                          fontWeight: fonts.bold,
-                          fontSize: 16,
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          width: double.infinity,
+                          child: PlatformButton(
+                            color: colors.primaryColor,
+                            height: 60,
+                            borderRadius: 12,
+                            child: const Text(
+                              'Sign in',
+                              style: TextStyle(
+                                fontFamily: fonts.primaryFF,
+                                color: colors.labelColor,
+                                fontWeight: fonts.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            onPress: () {
+                              _loginViewModel.login(_controllerUsername.text,
+                                  _controllerPassword.text);
+                            },
+                          ),
                         ),
-                      ),
-                      onPress: () {
-                        _loginViewModel.login(
-                            _controllerUsername.text, _controllerPassword.text);
-                      },
+                        Positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: 20,
+                          child: StreamBuilder<bool>(
+                              stream: _loginViewModel.isLoading.stream,
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<bool> snapshot) {
+                                return PlatformProgress(
+                                  isAnimating: snapshot.data,
+                                );
+                              }),
+                        )
+                      ],
                     ),
                   ),
                 ),

@@ -9,8 +9,10 @@ class LoginViewModel {
   final ApiService apiService = ApiService();
 
   PublishSubject<LoginState> loginState = PublishSubject<LoginState>();
-  BehaviorSubject<AuthState> authState = BehaviorSubject<AuthState>.seeded(AuthState.splash);
+  BehaviorSubject<AuthState> authState =
+      BehaviorSubject<AuthState>.seeded(AuthState.splash);
   BehaviorSubject<String> tokenUser = BehaviorSubject<String>.seeded('');
+  BehaviorSubject<bool> isLoading = BehaviorSubject<bool>.seeded(false, sync: true);
 
   void logout() {
     LocalStorageService.set(StorageKeys.token, null);
@@ -31,8 +33,10 @@ class LoginViewModel {
   }
 
   Future<void> login(String username, String password) async {
+    isLoading.add(true);
     try {
-      final LoginResponseDto resp = await apiService.login(LoginDto(username, password));
+      final LoginResponseDto resp =
+          await apiService.login(LoginDto(username, password));
       print(resp.token);
       tokenUser.add(resp.user.username);
       LocalStorageService.set(StorageKeys.token, resp.token);
@@ -47,6 +51,7 @@ class LoginViewModel {
       }
       loginState.add(LoginState.error);
     }
+    isLoading.add(false);
   }
 
   // void getUserMe() async {

@@ -1,3 +1,5 @@
+const String baseUrl = 'https://react-native-mobile.herokuapp.com';
+
 const String splash = '/';
 const String login = '/login';
 const String signup = '/signup';

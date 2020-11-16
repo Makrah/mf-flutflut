@@ -5,6 +5,7 @@ import 'package:mappin/src/api/Dto/CommentDto.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/api/Dto/UserDto.dart';
 import 'package:mappin/src/services/LocalStorageService.dart';
+import 'package:mappin/src/values/routes.dart' as app_routes;
 
 import 'Dto/LoginDto.dart';
 
@@ -12,8 +13,8 @@ class ApiService {
   ApiService() {
     // or new Dio with a BaseOptions instance.
     final BaseOptions options = BaseOptions(
-      baseUrl: 'https://react-native-mobile.herokuapp.com',
-      connectTimeout: 5000,
+      baseUrl: app_routes.baseUrl,
+      connectTimeout: 10000,
       receiveTimeout: 10000,
     );
     dio = Dio(options);

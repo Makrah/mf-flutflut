@@ -34,6 +34,11 @@ PostDto _$PostDtoFromJson(Map<String, dynamic> json) {
     json['position'] == null
         ? null
         : GeoPointDto.fromJson(json['position'] as Map<String, dynamic>),
+    json['user'] == null
+        ? null
+        : PostAuthorDto.fromJson(json['user'] as Map<String, dynamic>),
+    (json['comments'] as List)?.map((e) => e as String)?.toList(),
+    (json['likes'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 
@@ -43,6 +48,9 @@ Map<String, dynamic> _$PostDtoToJson(PostDto instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'position': instance.position?.toJson(),
+      'user': instance.user?.toJson(),
+      'comments': instance.comments,
+      'likes': instance.likes,
     };
 
 PostResponseDto _$PostResponseDtoFromJson(Map<String, dynamic> json) {

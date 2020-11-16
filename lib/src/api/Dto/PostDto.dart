@@ -19,7 +19,7 @@ class CreatePostDto {
 
 @JsonSerializable(explicitToJson: true)
 class PostDto {
-  PostDto(this.id, this.image, this.title, this.description, this.position);
+  PostDto(this.id, this.image, this.title, this.description, this.position, this.user, this.comments, this.likes);
 
   factory PostDto.fromJson(Map<String, dynamic> json) =>
       _$PostDtoFromJson(json);
@@ -30,6 +30,9 @@ class PostDto {
   final String title;
   final String description;
   final GeoPointDto position;
+  final PostAuthorDto user;
+  final List<String> comments;
+  final List<String> likes;
 
   Map<String, dynamic> toJson() => _$PostDtoToJson(this);
 }

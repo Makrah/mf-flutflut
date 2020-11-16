@@ -2,14 +2,17 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:math' as math;
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
 import 'package:lottie/lottie.dart';
 import 'package:mappin/src/api/Dto/GeoPointDto.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/viewModels/MapViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
+import 'package:mappin/src/widgets/map/MapCardWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
 
@@ -75,14 +78,18 @@ class _MapScreenState extends State<MapScreen>
     _initUserLocation();
     _mapViewModel.posts.stream.listen((List<PostDto> event) async {
       // todo -> mettre la bonne image
-      final List<map.Marker> tmpMarkers = await Future.wait(event.map(
-        (PostDto e) async => map.Marker(
-          markerId: map.MarkerId(e.id),
-          position: map.LatLng(e.position.lat, e.position.long),
-          icon: await _mapViewModel.getPostIcon(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSqL8sxSDkMonOxXu1HA_HnXmu8jkKsViBqVg&usqp=CAU'),
+      final List<map.Marker> tmpMarkers = await Future.wait(
+        event.map(
+          (PostDto e) async => map.Marker(
+            markerId: map.MarkerId(e.id),
+            position: map.LatLng(e.position.lat, e.position.long),
+            icon: await _mapViewModel.getPostIcon('https://picsum.photos/1000'),
+            onTap: () {
+              _mapViewModel.currentPost.add(e);
+            },
+          ),
         ),
-      ));
+      );
       setState(() {
         _markers = tmpMarkers.toSet();
       });
@@ -165,6 +172,24 @@ class _MapScreenState extends State<MapScreen>
                         )
                       ],
                     ),
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    left: 20,
+                    right: 20,
+                    height: 200,
+                    child: StreamBuilder<PostDto>(
+                        stream: _mapViewModel.currentPost.stream,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<PostDto> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const SizedBox.shrink();
+                          }
+                          return MapCardWidget(
+                            mapViewModel: _mapViewModel,
+                            currentPost: snapshot.data,
+                          );
+                        }),
                   ),
                 ],
               ),

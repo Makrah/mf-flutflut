@@ -8,10 +8,10 @@ class UserDto {
   factory UserDto.fromJson(Map<String, dynamic> json) =>
       _$UserDtoFromJson(json);
 
+  @JsonKey(name: '_id')
   final String id;
   final String username;
   final String image;
-
 
   Map<String, dynamic> toJson() => _$UserDtoToJson(this);
 }

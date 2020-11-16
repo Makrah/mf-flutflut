@@ -27,6 +27,7 @@ Map<String, dynamic> _$CreatePostDtoToJson(CreatePostDto instance) =>
 
 PostDto _$PostDtoFromJson(Map<String, dynamic> json) {
   return PostDto(
+    json['_id'] as String,
     json['image'] as String,
     json['title'] as String,
     json['description'] as String,
@@ -37,6 +38,7 @@ PostDto _$PostDtoFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$PostDtoToJson(PostDto instance) => <String, dynamic>{
+      '_id': instance.id,
       'image': instance.image,
       'title': instance.title,
       'description': instance.description,
@@ -58,7 +60,7 @@ Map<String, dynamic> _$PostResponseDtoToJson(PostResponseDto instance) =>
 
 PostAuthorDto _$PostAuthorDtoFromJson(Map<String, dynamic> json) {
   return PostAuthorDto(
-    json['id'] as String,
+    json['_id'] as String,
     json['username'] as String,
     json['image'] as String,
   );
@@ -66,7 +68,7 @@ PostAuthorDto _$PostAuthorDtoFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PostAuthorDtoToJson(PostAuthorDto instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'username': instance.username,
       'image': instance.image,
     };

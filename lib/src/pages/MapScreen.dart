@@ -1,9 +1,16 @@
 import 'dart:async';
+import 'dart:collection';
+import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
 import 'package:lottie/lottie.dart';
+import 'package:mappin/src/api/Dto/GeoPointDto.dart';
+import 'package:mappin/src/api/Dto/PostDto.dart';
+import 'package:mappin/src/viewModels/MapViewModel.dart';
+import 'package:mappin/src/widgets/DisposableWidget.dart';
+import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
 
 class MapScreen extends StatefulWidget {
@@ -13,25 +20,80 @@ class MapScreen extends StatefulWidget {
   _MapScreenState createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
-  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+class _MapScreenState extends State<MapScreen>
+    with TickerProviderStateMixin, DisposableWidget {
+  final Completer<map.GoogleMapController> _controllerMap =
+      Completer<map.GoogleMapController>();
+  Set<map.Marker> _markers = HashSet<map.Marker>();
+  final MapViewModel _mapViewModel = MapViewModel();
   AnimationController _controllerLottie;
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  static const map.CameraPosition _kGooglePlex = map.CameraPosition(
+    target: map.LatLng(43.240644, 5.406952),
+    zoom: 8,
   );
+
+  Future<void> _onRegionChanged() async {
+    final map.GoogleMapController mapRef = await _controllerMap.future;
+    final double zoom = await mapRef.getZoomLevel();
+    final int radius = math.pow(21 - zoom, 2.5).toInt();
+    final double screenWidth = MediaQuery.of(context).size.width *
+        MediaQuery.of(context).devicePixelRatio;
+    final double screenHeight = MediaQuery.of(context).size.height *
+        MediaQuery.of(context).devicePixelRatio;
+    final double middleX = screenWidth / 2;
+    final double middleY = screenHeight / 2;
+    final map.ScreenCoordinate screenCoordinate =
+        map.ScreenCoordinate(x: middleX.round(), y: middleY.round());
+    final map.LatLng middlePoint = await mapRef.getLatLng(screenCoordinate);
+    _mapViewModel.getPosts(middlePoint.latitude, middlePoint.longitude, radius);
+  }
+
+  Future<void> _focusOnUserTapped() async {
+    final GeoPointDto userLoc = _mapViewModel.userLocation.value;
+    if (userLoc != null) {
+      final map.GoogleMapController mapRef = await _controllerMap.future;
+      mapRef.animateCamera(
+        map.CameraUpdate.newCameraPosition(
+          map.CameraPosition(
+              target: map.LatLng(userLoc.lat, userLoc.long), zoom: 12),
+        ),
+      );
+    }
+  }
+
+  Future<void> _initUserLocation() async {
+    await _mapViewModel.getLocation();
+    _focusOnUserTapped();
+  }
 
   @override
   void initState() {
     super.initState();
 
     _controllerLottie = AnimationController(vsync: this);
+    _initUserLocation();
+    _mapViewModel.posts.stream.listen((List<PostDto> event) async {
+      // todo -> mettre la bonne image
+      final List<map.Marker> tmpMarkers = await Future.wait(event.map(
+        (PostDto e) async => map.Marker(
+          markerId: map.MarkerId(e.id),
+          position: map.LatLng(e.position.lat, e.position.long),
+          icon: await _mapViewModel.getPostIcon(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSqL8sxSDkMonOxXu1HA_HnXmu8jkKsViBqVg&usqp=CAU'),
+        ),
+      ));
+      setState(() {
+        _markers = tmpMarkers.toSet();
+      });
+    }).canceledBy(this);
+    _mapViewModel.getPosts(43.240644, 5.406952, 4);
   }
 
   @override
   void dispose() {
     _controllerLottie.dispose();
+    cancelSubscriptions();
     super.dispose();
   }
 
@@ -43,36 +105,68 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: <Widget>[
-            GoogleMap(
-              mapType: MapType.normal,
+            map.GoogleMap(
+              mapType: map.MapType.normal,
               initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+              myLocationButtonEnabled: false,
+              myLocationEnabled: true,
+              zoomControlsEnabled: false,
+              onCameraIdle: () {
+                _onRegionChanged();
+              },
+              markers: _markers,
+              onMapCreated: (map.GoogleMapController controller) {
+                _controllerMap.complete(controller);
               },
             ),
-            Positioned(
-              top: 100,
-              right: 10,
-              child: GestureDetector(
-                onTap: () {
-                  _controllerLottie.forward();
-                },
-                child: SizedBox(
-                  width: 100,
-                  height: 30,
-                  child: Lottie.asset(
-                    'assets/animations/focus_animation.json',
-                    controller: _controllerLottie,
-                    onLoaded: (LottieComposition composition) {
-                      _controllerLottie.duration = composition.duration;
-                      _controllerLottie.addStatusListener((AnimationStatus status) {
-                        if (status == AnimationStatus.completed) {
-                          _controllerLottie.reset();
-                        }
-                      });
-                    },
+            SafeArea(
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    top: 20,
+                    right: 20,
+                    child: Column(
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            // _mapViewModel.getPosts(43.240644, 5.406952, 4);
+                            _controllerLottie.forward();
+                            _focusOnUserTapped();
+                          },
+                          child: SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: Lottie.asset(
+                              'assets/animations/focus_animation.json',
+                              controller: _controllerLottie,
+                              onLoaded: (LottieComposition composition) {
+                                _controllerLottie.duration =
+                                    composition.duration;
+                                _controllerLottie.addStatusListener(
+                                    (AnimationStatus status) {
+                                  if (status == AnimationStatus.completed) {
+                                    _controllerLottie.reset();
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: StreamBuilder<bool>(
+                              stream: _mapViewModel.isLoading.stream,
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<bool> snapshot) {
+                                return PlatformProgress(
+                                  isAnimating: snapshot.data,
+                                );
+                              }),
+                        )
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
             )
           ],

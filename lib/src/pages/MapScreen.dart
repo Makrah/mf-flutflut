@@ -19,6 +19,8 @@ import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
 class MapScreen extends StatefulWidget {
   const MapScreen({Key key}) : super(key: key);
 
+  static const String routeName = '/map';
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }

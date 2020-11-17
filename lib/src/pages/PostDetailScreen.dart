@@ -7,6 +7,8 @@ import 'package:mappin/src/values/colors.dart' as colors;
 class PostDetailScreen extends StatefulWidget {
   const PostDetailScreen({Key key}) : super(key: key);
 
+  static const String routeName = '/postDetail';
+
   @override
   _PostDetailScreenState createState() => _PostDetailScreenState();
 }

@@ -6,6 +6,8 @@ import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key key}) : super(key: key);
 
+  static const String routeName = '/profile';
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }

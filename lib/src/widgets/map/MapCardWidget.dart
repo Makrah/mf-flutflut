@@ -7,7 +7,7 @@ import 'package:mappin/src/viewModels/MapViewModel.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/font.dart' as fonts;
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
-import 'package:mappin/src/values/routes.dart' as app_routes;
+import 'package:mappin/src/values/constants.dart' as app_routes;
 
 class MapCardWidget extends StatefulWidget {
   const MapCardWidget({

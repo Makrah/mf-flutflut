@@ -5,7 +5,7 @@ import 'package:mappin/src/api/Dto/CommentDto.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/api/Dto/UserDto.dart';
 import 'package:mappin/src/services/LocalStorageService.dart';
-import 'package:mappin/src/values/routes.dart' as app_routes;
+import 'package:mappin/src/values/constants.dart' as app_routes;
 
 import 'Dto/LoginDto.dart';
 

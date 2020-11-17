@@ -14,7 +14,6 @@ import 'package:mappin/src/values/themeiOS.dart';
 import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/pages/SplashScreen.dart';
 import 'package:mappin/src/values/themeAndroid.dart';
-import 'package:mappin/src/values/routes.dart' as app_routes;
 
 import 'src/values/themeAndroid.dart';
 
@@ -30,16 +29,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, StatefulWidget Function(BuildContext)> routes = <String, StatefulWidget Function(BuildContext)>{
-      app_routes.splash: (BuildContext context) => const SplashScreen(),
-      app_routes.login: (BuildContext context) => const LoginScreen(),
-      app_routes.signup: (BuildContext context) => const SignupScreen(),
-      app_routes.home: (BuildContext context) => HomeScreen(),
-      app_routes.profile: (BuildContext context) => const ProfileScreen(),
-      app_routes.createPost: (BuildContext context) => const CreatePostScreen(),
-      app_routes.map: (BuildContext context) => const MapScreen(),
-      app_routes.postDetail: (BuildContext context) => const PostDetailScreen(),
+      SplashScreen.routeName: (BuildContext context) => const SplashScreen(),
+      LoginScreen.routeName: (BuildContext context) => const LoginScreen(),
+      SignupScreen.routeName: (BuildContext context) => const SignupScreen(),
+      HomeScreen.routeName: (BuildContext context) => HomeScreen(),
+      ProfileScreen.routeName: (BuildContext context) => const ProfileScreen(),
+      CreatePostScreen.routeName: (BuildContext context) => const CreatePostScreen(),
+      MapScreen.routeName: (BuildContext context) => const MapScreen(),
+      PostDetailScreen.routeName: (BuildContext context) => const PostDetailScreen(),
     };
-    const String initialRoute = app_routes.splash;
+    const String initialRoute = SplashScreen.routeName;
     const String title = 'Flutter Demo';
     if (Platform.isIOS) {
       return CupertinoApp(

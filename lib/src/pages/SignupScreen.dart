@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mappin/main.dart';
+import 'package:mappin/src/pages/HomeScreen.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/enums.dart';
 import 'package:mappin/src/values/font.dart' as fonts;
@@ -16,10 +17,12 @@ import 'package:mappin/src/widgets/login/LoginTextFieldWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
-import 'package:mappin/src/values/routes.dart' as app_routes;
+import 'package:mappin/src/values/constants.dart' as app_routes;
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key key}) : super(key: key);
+
+  static const String routeName = '/signup';
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
@@ -55,7 +58,7 @@ class _SignupScreenState extends State<SignupScreen> with DisposableWidget {
         case SignupState.success:
           _loginViewModel.authState.add(AuthState.authent);
           Navigator.of(context, rootNavigator: true)
-              .pushReplacementNamed(app_routes.home);
+              .pushReplacementNamed(HomeScreen.routeName);
           break;
         case SignupState.error:
           showError(context, 'Invalid credentials');

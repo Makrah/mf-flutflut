@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mappin/main.dart';
+import 'package:mappin/src/pages/HomeScreen.dart';
+import 'package:mappin/src/pages/LoginScreen.dart';
 import 'package:mappin/src/values/enums.dart';
 import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
-import 'package:mappin/src/values/routes.dart' as app_routes;
+import 'package:mappin/src/values/constants.dart' as app_routes;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key key}) : super(key: key);
+
+  static const String routeName = '/';
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -27,10 +31,10 @@ class _SplashScreenState extends State<SplashScreen> with DisposableWidget {
     _loginViewModel.authState.stream.listen((AuthState event) {
       switch (event) {
         case AuthState.unauthent:
-          Navigator.pushReplacementNamed(context, app_routes.login);
+          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
           break;
         case AuthState.authent:
-          Navigator.pushReplacementNamed(context, app_routes.home);
+          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
           break;
         default:
       }

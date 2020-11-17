@@ -2,12 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
+import 'package:mappin/src/pages/PostDetailScreen.dart';
 import 'package:mappin/src/viewModels/MapViewModel.dart';
 
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/font.dart' as fonts;
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
-import 'package:mappin/src/values/constants.dart' as app_routes;
+import 'package:mappin/src/values/constants.dart' as constants;
 
 class MapCardWidget extends StatefulWidget {
   const MapCardWidget({
@@ -30,7 +31,10 @@ class _MapCardWidgetState extends State<MapCardWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context, rootNavigator: false).pushNamed('/postDetail');
+        Navigator.of(context, rootNavigator: false).pushNamed(
+          PostDetailScreen.routeName,
+          arguments: PostDetailArguments(widget._currentPost.id),
+        );
       },
       child: Stack(
         children: <Widget>[
@@ -71,7 +75,7 @@ class _MapCardWidgetState extends State<MapCardWidget> {
                         width: 30,
                         height: 30,
                         imageUrl:
-                            '${app_routes.baseUrl}${widget._currentPost.user.image}',
+                            '${constants.baseUrl}${widget._currentPost.user.image}',
                         placeholder: (BuildContext context, String url) =>
                             SvgPicture.asset(
                                 'assets/images/placeholder_user.svg'),

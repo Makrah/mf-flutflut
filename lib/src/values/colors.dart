@@ -11,7 +11,7 @@ const Color smoothLabelColor = Color(0xFF96A7AF);
 const Color backgroundColor = Color(0xFF22343C);
 const Color backgroundColorDark = Color(0xFF22343C);
 
-const Color commentBg = Color(0xFF96A7AF);
+const Color commentBg = Color(0x8096A7AF);
 const Color postCellBg = Color(0xFF30444E);
 const Color canvasColor = Colors.transparent;
 

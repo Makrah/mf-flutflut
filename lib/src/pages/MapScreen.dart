@@ -16,6 +16,9 @@ import 'package:mappin/src/widgets/map/MapCardWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
 
+import 'package:mappin/src/values/colors.dart' as colors;
+import 'package:mappin/src/values/font.dart' as fonts;
+
 class MapScreen extends StatefulWidget {
   const MapScreen({Key key}) : super(key: key);
 
@@ -109,6 +112,15 @@ class _MapScreenState extends State<MapScreen>
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
+      appBarTitle: Text(
+        'Search',
+        style: TextStyle(
+          fontFamily: fonts.primaryFF,
+          color: colors.labelColor,
+          fontWeight: fonts.bold,
+          fontSize: 18,
+        ),
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

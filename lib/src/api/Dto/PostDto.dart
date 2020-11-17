@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mappin/src/api/Dto/CommentDto.dart';
 import 'package:mappin/src/api/Dto/GeoPointDto.dart';
 
 part 'PostDto.g.dart';
@@ -19,7 +20,8 @@ class CreatePostDto {
 
 @JsonSerializable(explicitToJson: true)
 class PostDto {
-  PostDto(this.id, this.image, this.title, this.description, this.position, this.user, this.comments, this.likes);
+  PostDto(this.id, this.image, this.title, this.description, this.position,
+      this.user, this.comments, this.likes);
 
   factory PostDto.fromJson(Map<String, dynamic> json) =>
       _$PostDtoFromJson(json);
@@ -38,13 +40,45 @@ class PostDto {
 }
 
 @JsonSerializable(explicitToJson: true)
+class PostDetailDto {
+  PostDetailDto(
+      this.id,
+      this.image,
+      this.title,
+      this.description,
+      this.position,
+      this.user,
+      this.comments,
+      this.likes,
+      this.createdAt,
+      this.updatedAt);
+
+  factory PostDetailDto.fromJson(Map<String, dynamic> json) =>
+      _$PostDetailDtoFromJson(json);
+
+  @JsonKey(name: '_id')
+  final String id;
+  final String image;
+  final String title;
+  final String description;
+  final GeoPointDto position;
+  final PostAuthorDto user;
+  final List<CommentDto> comments;
+  final List<String> likes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  Map<String, dynamic> toJson() => _$PostDetailDtoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class PostResponseDto {
   PostResponseDto(this.post);
 
   factory PostResponseDto.fromJson(Map<String, dynamic> json) =>
       _$PostResponseDtoFromJson(json);
 
-  final PostDto post;
+  final PostDetailDto post;
 
   Map<String, dynamic> toJson() => _$PostResponseDtoToJson(this);
 }

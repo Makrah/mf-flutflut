@@ -27,15 +27,31 @@ class CommentResponseDto {
 
 @JsonSerializable()
 class CommentDto {
-  CommentDto(this.id, this.content, this.user, this.post);
+  CommentDto(this.id, this.content, this.user, this.createdAt);
 
   factory CommentDto.fromJson(Map<String, dynamic> json) =>
       _$CommentDtoFromJson(json);
 
+  @JsonKey(name: '_id')
   final String id;
   final String content;
-  final String user;
-  final String post;
+  final CommentAuthorDto user;
+  final DateTime createdAt;
 
   Map<String, dynamic> toJson() => _$CommentDtoToJson(this);
+}
+
+@JsonSerializable()
+class CommentAuthorDto {
+  CommentAuthorDto(this.id, this.username, this.image);
+
+  factory CommentAuthorDto.fromJson(Map<String, dynamic> json) =>
+      _$CommentAuthorDtoFromJson(json);
+
+  @JsonKey(name: '_id')
+  final String id;
+  final String username;
+  final String image;
+
+  Map<String, dynamic> toJson() => _$CommentAuthorDtoToJson(this);
 }

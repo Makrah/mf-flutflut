@@ -32,17 +32,36 @@ Map<String, dynamic> _$CommentResponseDtoToJson(CommentResponseDto instance) =>
 
 CommentDto _$CommentDtoFromJson(Map<String, dynamic> json) {
   return CommentDto(
-    json['id'] as String,
+    json['_id'] as String,
     json['content'] as String,
-    json['user'] as String,
-    json['post'] as String,
+    json['user'] == null
+        ? null
+        : CommentAuthorDto.fromJson(json['user'] as Map<String, dynamic>),
+    json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
   );
 }
 
 Map<String, dynamic> _$CommentDtoToJson(CommentDto instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'content': instance.content,
       'user': instance.user,
-      'post': instance.post,
+      'createdAt': instance.createdAt?.toIso8601String(),
+    };
+
+CommentAuthorDto _$CommentAuthorDtoFromJson(Map<String, dynamic> json) {
+  return CommentAuthorDto(
+    json['_id'] as String,
+    json['username'] as String,
+    json['image'] as String,
+  );
+}
+
+Map<String, dynamic> _$CommentAuthorDtoToJson(CommentAuthorDto instance) =>
+    <String, dynamic>{
+      '_id': instance.id,
+      'username': instance.username,
+      'image': instance.image,
     };

@@ -33,7 +33,7 @@ class _MapCardWidgetState extends State<MapCardWidget> {
       onTap: () {
         Navigator.of(context, rootNavigator: false).pushNamed(
           PostDetailScreen.routeName,
-          arguments: PostDetailArguments(widget._currentPost.id),
+          arguments: PostDetailArguments(widget._currentPost),
         );
       },
       child: Stack(
@@ -74,6 +74,7 @@ class _MapCardWidgetState extends State<MapCardWidget> {
                       child: CachedNetworkImage(
                         width: 30,
                         height: 30,
+                        fit: BoxFit.fill,
                         imageUrl:
                             '${constants.baseUrl}${widget._currentPost.user.image}',
                         placeholder: (BuildContext context, String url) =>

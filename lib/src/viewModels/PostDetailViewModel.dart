@@ -11,13 +11,17 @@ class PostDetailViewModel {
       BehaviorSubject<bool>.seeded(false, sync: true);
   BehaviorSubject<PostDetailDto> post =
       BehaviorSubject<PostDetailDto>.seeded(null, sync: true);
+  BehaviorSubject<PostDto> currentPost =
+      BehaviorSubject<PostDto>.seeded(null, sync: true);
   BehaviorSubject<List<CommentDto>> comments =
       BehaviorSubject<List<CommentDto>>.seeded(<CommentDto>[], sync: true);
 
-  Future<void> getPost(String postId) async {
+  Future<void> getPost(PostDto currentPost) async {
+    this.currentPost.add(currentPost);
     isLoading.add(true);
     try {
-      final PostResponseDto resp = await apiService.getPost('5facb9563dff4b00171684be');
+      final PostResponseDto resp =
+          await apiService.getPost('5facb9563dff4b00171684be');
       post.add(resp.post);
       comments.add(resp.post.comments);
     } on DioError catch (error) {

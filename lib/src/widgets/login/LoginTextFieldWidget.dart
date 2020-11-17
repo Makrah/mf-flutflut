@@ -8,14 +8,17 @@ class LoginTextFieldWidget extends StatelessWidget {
     @required TextEditingController controllerUsername,
     @required String placeholder,
     @required String svgPath,
+    @required bool isPassword,
   })  : _controllerUsername = controllerUsername,
         _placeholder = placeholder,
         _svgPath = svgPath,
+        _isPassword = isPassword,
         super(key: key);
 
   final TextEditingController _controllerUsername;
   final String _placeholder;
   final String _svgPath;
+  final bool _isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,7 @@ class LoginTextFieldWidget extends StatelessWidget {
             child: PlatformTextField(
               placeholder: _placeholder,
               controller: _controllerUsername,
+              isPassword: _isPassword,
             ),
           ),
         ],

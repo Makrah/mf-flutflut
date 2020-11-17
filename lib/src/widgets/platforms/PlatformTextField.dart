@@ -5,15 +5,18 @@ import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/font.dart' as fonts;
 
 class PlatformTextField extends PlatformWidget<CupertinoTextField, TextField> {
-  PlatformTextField({this.controller, this.placeholder});
+  PlatformTextField({this.controller, this.placeholder, this.isPassword});
 
   final TextEditingController controller;
   final String placeholder;
+  final bool isPassword;
 
   @override
   TextField createAndroidWidget(BuildContext context) {
     return TextField(
       controller: controller,
+      obscureText: isPassword,
+      autocorrect: false,
       style: const TextStyle(
         fontFamily: fonts.primaryFF,
         color: colors.smoothLabelColor,
@@ -40,6 +43,8 @@ class PlatformTextField extends PlatformWidget<CupertinoTextField, TextField> {
   CupertinoTextField createIosWidget(BuildContext context) {
     return CupertinoTextField(
       controller: controller,
+      obscureText: isPassword,
+      autocorrect: false,
       placeholder: placeholder,
       style: const TextStyle(
         fontFamily: fonts.primaryFF,

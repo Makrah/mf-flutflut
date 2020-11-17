@@ -43,7 +43,16 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
           EdgeAlert.show(
             context,
             title: 'Erreur',
-            description: 'Identifiants invalids',
+            description: 'Invalid credentials',
+            gravity: EdgeAlert.TOP,
+            backgroundColor: colors.alerterErrorColor,
+          );
+          break;
+        case LoginState.noInternet:
+          EdgeAlert.show(
+            context,
+            title: 'Erreur',
+            description: 'No internet connection',
             gravity: EdgeAlert.TOP,
             backgroundColor: colors.alerterErrorColor,
           );
@@ -130,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                           controllerUsername: _controllerUsername,
                           placeholder: 'Username',
                           svgPath: 'assets/images/tf_username.svg',
+                          isPassword: false,
                         ),
                       ),
                     ),
@@ -141,6 +151,7 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                           controllerUsername: _controllerPassword,
                           placeholder: 'Password',
                           svgPath: 'assets/images/tf_password.svg',
+                          isPassword: true,
                         ),
                       ),
                     ),
@@ -179,14 +190,15 @@ class _LoginScreenState extends State<LoginScreen> with DisposableWidget {
                           bottom: 0,
                           right: 20,
                           child: StreamBuilder<bool>(
-                              stream: _loginViewModel.isLoading.stream,
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<bool> snapshot) {
-                                return PlatformProgress(
-                                  isAnimating: snapshot.data,
-                                );
-                              }),
-                        )
+                            stream: _loginViewModel.isLoading.stream,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<bool> snapshot) {
+                              return PlatformProgress(
+                                isAnimating: snapshot.data,
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

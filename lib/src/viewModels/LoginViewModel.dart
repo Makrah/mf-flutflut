@@ -12,7 +12,8 @@ class LoginViewModel {
   BehaviorSubject<AuthState> authState =
       BehaviorSubject<AuthState>.seeded(AuthState.splash);
   BehaviorSubject<String> tokenUser = BehaviorSubject<String>.seeded('');
-  BehaviorSubject<bool> isLoading = BehaviorSubject<bool>.seeded(false, sync: true);
+  BehaviorSubject<bool> isLoading =
+      BehaviorSubject<bool>.seeded(false, sync: true);
 
   void logout() {
     LocalStorageService.set(StorageKeys.token, null);
@@ -45,11 +46,10 @@ class LoginViewModel {
       authState.add(AuthState.authent);
     } on DioError catch (error) {
       if (error.type != DioErrorType.DEFAULT) {
-        // No internet
+        loginState.add(LoginState.noInternet);
       } else {
-        // print("Error ------> ${error.response.statusCode}");
+        loginState.add(LoginState.error);
       }
-      loginState.add(LoginState.error);
     }
     isLoading.add(false);
   }

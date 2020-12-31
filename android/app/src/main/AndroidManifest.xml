@@ -11,6 +11,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
+        android:requestLegacyExternalStorage="true"
         android:label="mappin"
         android:icon="@mipmap/launcher_icon">
 

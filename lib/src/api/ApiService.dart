@@ -61,6 +61,12 @@ class ApiService {
     return UserResponseDto.fromJson(response.data);
   }
 
+  Future<UserResponseDto> patchUserImage(UpdateUserImageDto body) async {
+    final Response<Map<String, dynamic>> response =
+        await dio.patch('/user', data: body.toJson());
+    return UserResponseDto.fromJson(response.data);
+  }
+
   Future<UserResponseDto> getUserMe() async {
     final Response<Map<String, dynamic>> response = await dio.get('/user');
     return UserResponseDto.fromJson(response.data);

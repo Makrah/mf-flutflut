@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/api/Dto/UserDto.dart';
+import 'package:mappin/src/api/Dto/GeoPointDto.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:mappin/src/api/ApiService.dart';
 import 'package:mappin/src/api/Dto/LoginDto.dart';
@@ -56,6 +57,20 @@ class ProfileViewModel {
       final resp = await apiService.patchUserImage(UpdateUserImageDto(image));
       final user = await apiService.getUserMe();
       userImage.add(user.user.image);
+    } on DioError catch (error) {
+      if (error.type != DioErrorType.DEFAULT) {
+        profilState.add(ProfileState.noInternet);
+      } else {
+        print(error.response.statusMessage);
+        profilState.add(ProfileState.error);
+      }
+    }
+  }
+
+  Future<void> createPost(String latitude, String longitude, String title, String description, String image) async {
+    try {
+      final resp = await apiService.createPost(new CreatePostDto(image, title, description, GeoPointDto(double.parse(latitude), double.parse(longitude))));
+      profilState.add(ProfileState.success);
     } on DioError catch (error) {
       if (error.type != DioErrorType.DEFAULT) {
         profilState.add(ProfileState.noInternet);

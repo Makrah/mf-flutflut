@@ -23,6 +23,15 @@ Une fois connecté, il faut run la commande:
 flutter run
 ```
 
+## Flutter analyze
+
+Ce projet utilise la norme officielle mise en place par la team flutter.
+Le fichier de configuration de la norme se trouve dans: ./analysis_options.yaml
+Afin de vérifier les erreurs de norme, vous pouvez run cette commande:
+```
+flutter analyze
+```
+
 ## Build data classes
 
 Afin de build les data class, il faut run cette commande:

@@ -56,26 +56,27 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   Widget build(BuildContext context) {
     return PlatformScaffold(
       appBarTitle: StreamBuilder<PostDto>(
-        stream: _postDetailViewModel.currentPost.stream,
-        builder: (BuildContext context, AsyncSnapshot<PostDto> snapshot) {
-          return Text(
-            snapshot.hasData ? snapshot.data.title : '-',
-            style: TextStyle(
-              fontFamily: fonts.primaryFF,
-              color: colors.labelColor,
-              fontWeight: fonts.bold,
-              fontSize: 18,
-            ),
-          );
-        }
-      ),
-      body: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        child: PostDetailMain(
-          kGooglePlex: _kGooglePlex,
-          controllerMap: _controllerMap,
-          postDetailViewModel: _postDetailViewModel,
+          stream: _postDetailViewModel.currentPost.stream,
+          builder: (BuildContext context, AsyncSnapshot<PostDto> snapshot) {
+            return Text(
+              snapshot.hasData ? snapshot.data.title : '-',
+              style: TextStyle(
+                fontFamily: fonts.primaryFF,
+                color: colors.labelColor,
+                fontWeight: fonts.bold,
+                fontSize: 18,
+              ),
+            );
+          }),
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: PostDetailMain(
+            kGooglePlex: _kGooglePlex,
+            controllerMap: _controllerMap,
+            postDetailViewModel: _postDetailViewModel,
+          ),
         ),
       ),
     );

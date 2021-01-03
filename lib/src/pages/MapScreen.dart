@@ -112,7 +112,7 @@ class _MapScreenState extends State<MapScreen>
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      appBarTitle: Text(
+      appBarTitle: const Text(
         'Search',
         style: TextStyle(
           fontFamily: fonts.primaryFF,

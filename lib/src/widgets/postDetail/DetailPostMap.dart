@@ -23,7 +23,7 @@ class DetailPostMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     map.CameraPosition camPos;
-    Set<map.Marker> markers = HashSet<map.Marker>();
+    final Set<map.Marker> markers = HashSet<map.Marker>();
     if (_currentPost != null) {
       camPos = map.CameraPosition(
         target:
@@ -40,7 +40,7 @@ class DetailPostMap extends StatelessWidget {
     }
     return Container(
       height: double.infinity,
-      margin: EdgeInsets.only(left: 5),
+      margin: const EdgeInsets.only(left: 5),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -49,7 +49,7 @@ class DetailPostMap extends StatelessWidget {
       child: _currentPost == null
           ? AnimatedOpacity(
               opacity: 0.6,
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               child: Container(
                 width: 50,
                 height: 50,
@@ -57,7 +57,7 @@ class DetailPostMap extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   color: colors.smoothLabelColor,
                 ),
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: PlatformProgress(
                   isAnimating: true,
                 ),

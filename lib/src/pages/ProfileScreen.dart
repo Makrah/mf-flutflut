@@ -249,12 +249,12 @@ class _HeaderProfilBisState extends State<HeaderProfilBis> {
                     fontSize: 44,
                   ),
                 ),
-                IconButton(
-                    icon: SvgPicture.asset('assets/images/icon_logout.svg'),
-                    iconSize: 50,
-                    onPressed: () {
-                      widget.loginViewModel.logout();
-                    })
+                GestureDetector(
+                  child: SvgPicture.asset('assets/images/icon_logout.svg'),
+                  onTap: () {
+                    widget.loginViewModel.logout();
+                  },
+                )
               ],
             ),
           ],

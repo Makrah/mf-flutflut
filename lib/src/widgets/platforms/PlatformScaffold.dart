@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mappin/src/widgets/platforms/PlatformAppBar.dart';
 import 'package:mappin/src/widgets/platforms/PlatformWidget.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 

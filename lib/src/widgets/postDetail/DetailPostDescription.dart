@@ -23,7 +23,7 @@ class _DetailPostDescriptionState extends State<DetailPostDescription> {
     return Container(
       padding: EdgeInsets.all(widget._currentPost == null ? 0 : 10),
       height: double.infinity,
-      margin: EdgeInsets.only(right: 5),
+      margin: const EdgeInsets.only(right: 5),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -32,7 +32,7 @@ class _DetailPostDescriptionState extends State<DetailPostDescription> {
       child: widget._currentPost == null
           ? AnimatedOpacity(
               opacity: 0.6,
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               child: Container(
                 width: 50,
                 height: 50,
@@ -40,7 +40,7 @@ class _DetailPostDescriptionState extends State<DetailPostDescription> {
                   borderRadius: BorderRadius.circular(4),
                   color: colors.smoothLabelColor,
                 ),
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: PlatformProgress(
                   isAnimating: true,
                 ),
@@ -49,9 +49,9 @@ class _DetailPostDescriptionState extends State<DetailPostDescription> {
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Posted on',
+                children: <Widget>[
+                  const Text(
+                    'Description',
                     style: TextStyle(
                       fontFamily: fonts.primaryFF,
                       color: colors.labelColor,

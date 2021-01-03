@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:math' as math;
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
 import 'package:lottie/lottie.dart';
 import 'package:mappin/src/api/Dto/GeoPointDto.dart';
@@ -88,7 +86,7 @@ class _MapScreenState extends State<MapScreen>
           (PostDto e) async => map.Marker(
             markerId: map.MarkerId(e.id),
             position: map.LatLng(e.position.lat, e.position.long),
-            icon: await _mapViewModel.getPostIcon('https://picsum.photos/1000'),
+            icon: await _mapViewModel.getPostIcon(e.image),//'https://picsum.photos/1000'),
             onTap: () {
               _mapViewModel.currentPost.add(e);
             },
@@ -112,7 +110,7 @@ class _MapScreenState extends State<MapScreen>
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      appBarTitle: Text(
+      appBarTitle: const Text(
         'Search',
         style: TextStyle(
           fontFamily: fonts.primaryFF,

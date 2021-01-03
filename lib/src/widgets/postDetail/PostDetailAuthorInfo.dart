@@ -18,14 +18,14 @@ class PostDetailAuthorInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Row(
           children: <Widget>[
             ClipOval(
               child: CachedNetworkImage(
                 width: 30,
                 height: 30,
-                imageUrl: 'https://picsum.photos/100',
+                imageUrl: _currentPost.user.image,
                 placeholder: (BuildContext context, String url) =>
                     SvgPicture.asset('assets/images/placeholder_user.svg'),
               ),
@@ -44,7 +44,7 @@ class PostDetailAuthorInfo extends StatelessWidget {
           ],
         ),
         Row(
-          children: [
+          children: <Widget>[
             SvgPicture.asset('assets/images/icon_like.svg'),
             Padding(
               padding: const EdgeInsets.only(left: 8, right: 20),

@@ -8,7 +8,6 @@ import 'package:mappin/src/viewModels/MapViewModel.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/font.dart' as fonts;
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
-import 'package:mappin/src/values/constants.dart' as constants;
 
 class MapCardWidget extends StatefulWidget {
   const MapCardWidget({
@@ -49,7 +48,7 @@ class _MapCardWidgetState extends State<MapCardWidget> {
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.fill,
-                  imageUrl: "https://picsum.photos/2000",
+                  imageUrl: widget._currentPost.image,
                   placeholder: (BuildContext context, String url) => Container(
                     color: colors.backgroundColorDark,
                     child: PlatformProgress(
@@ -75,8 +74,8 @@ class _MapCardWidgetState extends State<MapCardWidget> {
                         width: 30,
                         height: 30,
                         fit: BoxFit.fill,
-                        imageUrl:
-                            '${constants.baseUrl}${widget._currentPost.user.image}',
+                        imageUrl: widget._currentPost.user.image,
+                            // '${constants.baseUrl}${widget._currentPost.user.image}',
                         placeholder: (BuildContext context, String url) =>
                             SvgPicture.asset(
                                 'assets/images/placeholder_user.svg'),
@@ -123,7 +122,7 @@ class _MapCardWidgetState extends State<MapCardWidget> {
                         textAlign: TextAlign.start,
                       ),
                       Row(
-                        children: [
+                        children: <Widget>[
                           SvgPicture.asset('assets/images/icon_like.svg'),
                           Padding(
                             padding: const EdgeInsets.only(left: 8, right: 20),

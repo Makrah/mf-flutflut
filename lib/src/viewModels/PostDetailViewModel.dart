@@ -21,7 +21,7 @@ class PostDetailViewModel {
     isLoading.add(true);
     try {
       final PostResponseDto resp =
-          await apiService.getPost('5facb9563dff4b00171684be');
+          await apiService.getPost(currentPost.id);
       post.add(resp.post);
       comments.add(resp.post.comments);
     } on DioError catch (error) {

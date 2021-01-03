@@ -88,7 +88,7 @@ class _MapScreenState extends State<MapScreen>
           (PostDto e) async => map.Marker(
             markerId: map.MarkerId(e.id),
             position: map.LatLng(e.position.lat, e.position.long),
-            icon: await _mapViewModel.getPostIcon('https://picsum.photos/1000'),
+            icon: await _mapViewModel.getPostIcon(e.image),//'https://picsum.photos/1000'),
             onTap: () {
               _mapViewModel.currentPost.add(e);
             },

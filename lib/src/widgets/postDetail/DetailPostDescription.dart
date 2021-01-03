@@ -51,7 +51,7 @@ class _DetailPostDescriptionState extends State<DetailPostDescription> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Posted on',
+                    'Description',
                     style: TextStyle(
                       fontFamily: fonts.primaryFF,
                       color: colors.labelColor,

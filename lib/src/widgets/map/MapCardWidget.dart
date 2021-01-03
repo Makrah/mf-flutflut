@@ -49,7 +49,7 @@ class _MapCardWidgetState extends State<MapCardWidget> {
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.fill,
-                  imageUrl: "https://picsum.photos/2000",
+                  imageUrl: widget._currentPost.image,
                   placeholder: (BuildContext context, String url) => Container(
                     color: colors.backgroundColorDark,
                     child: PlatformProgress(
@@ -75,8 +75,8 @@ class _MapCardWidgetState extends State<MapCardWidget> {
                         width: 30,
                         height: 30,
                         fit: BoxFit.fill,
-                        imageUrl:
-                            '${constants.baseUrl}${widget._currentPost.user.image}',
+                        imageUrl: widget._currentPost.user.image,
+                            // '${constants.baseUrl}${widget._currentPost.user.image}',
                         placeholder: (BuildContext context, String url) =>
                             SvgPicture.asset(
                                 'assets/images/placeholder_user.svg'),

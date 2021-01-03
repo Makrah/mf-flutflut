@@ -25,7 +25,7 @@ class PostDetailAuthorInfo extends StatelessWidget {
               child: CachedNetworkImage(
                 width: 30,
                 height: 30,
-                imageUrl: 'https://picsum.photos/100',
+                imageUrl: _currentPost.user.image,
                 placeholder: (BuildContext context, String url) =>
                     SvgPicture.asset('assets/images/placeholder_user.svg'),
               ),

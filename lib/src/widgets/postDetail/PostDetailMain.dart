@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
+import 'package:mappin/src/api/Dto/CommentDto.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/viewModels/PostDetailViewModel.dart';
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
@@ -59,7 +60,7 @@ class PostDetailMain extends StatelessWidget {
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.fill,
-                            imageUrl: "https://picsum.photos/2000",
+                            imageUrl: currentPostSnap.data.image,
                             placeholder: (BuildContext context, String url) =>
                                 Container(
                               color: colors.backgroundColorDark,
@@ -87,8 +88,9 @@ class PostDetailMain extends StatelessWidget {
                               ),
                               Expanded(
                                 child: DetailPostMap(
-                                    controllerMap: _controllerMap,
-                                    currentPost: currentPostSnap.data,),
+                                  controllerMap: _controllerMap,
+                                  currentPost: currentPostSnap.data,
+                                ),
                               ),
                             ],
                           );
@@ -110,15 +112,17 @@ class PostDetailMain extends StatelessWidget {
                   ],
                 ),
               ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    CommentCellWidget(),
-                    CommentCellWidget(),
-                    CommentCellWidget(),
-                  ],
-                ),
-              ),
+              StreamBuilder<List<CommentDto>>(
+                  stream: _postDetailViewModel.comments,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<CommentDto>> snap) {
+                    return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return CommentCellWidget(comment: snap.data[index]);
+                      }, childCount: snap.data.length),
+                    );
+                  }),
             ],
           );
         });

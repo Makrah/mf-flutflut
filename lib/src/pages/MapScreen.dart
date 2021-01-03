@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:math' as math;
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
 import 'package:lottie/lottie.dart';
 import 'package:mappin/src/api/Dto/GeoPointDto.dart';

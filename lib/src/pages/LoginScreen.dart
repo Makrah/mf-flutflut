@@ -15,7 +15,6 @@ import 'package:mappin/src/widgets/login/LoginTextFieldWidget.dart';
 import 'package:mappin/src/widgets/platforms/PlatformButton.dart';
 import 'package:mappin/src/widgets/platforms/PlatformProgress.dart';
 import 'package:mappin/src/widgets/platforms/PlatformScaffold.dart';
-import 'package:mappin/src/values/constants.dart' as app_routes;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);

@@ -18,7 +18,7 @@ class PostDetailAuthorInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Row(
           children: <Widget>[
             ClipOval(
@@ -44,7 +44,7 @@ class PostDetailAuthorInfo extends StatelessWidget {
           ],
         ),
         Row(
-          children: [
+          children: <Widget>[
             SvgPicture.asset('assets/images/icon_like.svg'),
             Padding(
               padding: const EdgeInsets.only(left: 8, right: 20),

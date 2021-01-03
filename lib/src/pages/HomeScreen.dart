@@ -11,7 +11,6 @@ import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
 import 'package:mappin/src/widgets/bottomNavigation/AdaptativeBottomNavigationScaffold.dart';
 import 'package:mappin/src/widgets/bottomNavigation/AppFlow.dart';
-import 'package:mappin/src/values/constants.dart' as app_routes;
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home';

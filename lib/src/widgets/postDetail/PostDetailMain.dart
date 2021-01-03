@@ -19,15 +19,12 @@ import 'package:mappin/src/values/font.dart' as fonts;
 class PostDetailMain extends StatelessWidget {
   const PostDetailMain({
     Key key,
-    @required map.CameraPosition kGooglePlex,
     @required Completer<map.GoogleMapController> controllerMap,
     @required PostDetailViewModel postDetailViewModel,
-  })  : _kGooglePlex = kGooglePlex,
-        _controllerMap = controllerMap,
+  }) : _controllerMap = controllerMap,
         _postDetailViewModel = postDetailViewModel,
         super(key: key);
 
-  final map.CameraPosition _kGooglePlex;
   final Completer<map.GoogleMapController> _controllerMap;
   final PostDetailViewModel _postDetailViewModel;
 
@@ -43,7 +40,7 @@ class PostDetailMain extends StatelessWidget {
                 delegate: SliverChildListDelegate(
                   <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       child: PostDetailAuthorInfo(
                         currentPost: currentPostSnap.data,
                       ),
@@ -51,7 +48,7 @@ class PostDetailMain extends StatelessWidget {
                     Container(
                       height: 200,
                       width: double.infinity,
-                      margin: EdgeInsets.symmetric(vertical: 10),
+                      margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Hero(
                         tag: 'img_selected',
                         child: ClipRRect(
@@ -80,7 +77,7 @@ class PostDetailMain extends StatelessWidget {
                         builder: (BuildContext context,
                             AsyncSnapshot<PostDetailDto> snapshot) {
                           return Row(
-                            children: [
+                            children: <Widget>[
                               Expanded(
                                 child: DetailPostDescription(
                                   currentPost: snapshot.data,
@@ -98,8 +95,8 @@ class PostDetailMain extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Text(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: const Text(
                         'Comments',
                         style: TextStyle(
                           fontFamily: fonts.primaryFF,

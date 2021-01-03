@@ -3,15 +3,13 @@ import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/api/Dto/UserDto.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:mappin/src/api/ApiService.dart';
-import 'package:mappin/src/api/Dto/LoginDto.dart';
-import 'package:mappin/src/services/LocalStorageService.dart';
 import 'package:mappin/src/values/enums.dart';
 
 class ProfileViewModel {
   final ApiService apiService = ApiService();
 
   int step = 0;
-  List<PostDto> originalList = [];
+  List<PostDto> originalList = <PostDto>[];
 
   BehaviorSubject<String> tokenUser = BehaviorSubject<String>.seeded('');
   PublishSubject<ProfileState> profilState = PublishSubject<ProfileState>();
@@ -32,29 +30,29 @@ class ProfileViewModel {
   }
 
   void setupLikes() {
-    var newList = <PostDto>[];
-    originalList.forEach((element) {
+    final List<PostDto> newList = <PostDto>[];
+    originalList.forEach((PostDto element) {
       newList.add(element);
     });
-    newList.sort((a, b) => a.likes.length.compareTo(b.likes.length));
+    newList.sort((PostDto a, PostDto b) => a.likes.length.compareTo(b.likes.length));
     userPosts.add(newList.reversed.toList());
     step = 1;
   }
 
   void setupComments() {
-    var newList = <PostDto>[];
-    originalList.forEach((element) {
+    final List<PostDto> newList = <PostDto>[];
+    originalList.forEach((PostDto element) {
       newList.add(element);
     });
-    newList.sort((a, b) => a.comments.length.compareTo(b.comments.length));
+    newList.sort((PostDto a, PostDto b) => a.comments.length.compareTo(b.comments.length));
     userPosts.add(newList.reversed.toList());
     step = 2;
   }
 
   Future<void> updateProfile(String image) async {
     try {
-      final resp = await apiService.patchUserImage(UpdateUserImageDto(image));
-      final user = await apiService.getUserMe();
+      await apiService.patchUserImage(UpdateUserImageDto(image));
+      final UserResponseDto user = await apiService.getUserMe();
       userImage.add(user.user.image);
     } on DioError catch (error) {
       if (error.type != DioErrorType.DEFAULT) {
@@ -69,7 +67,7 @@ class ProfileViewModel {
   Future<void> getUserMe() async {
     isLoadingFunc(true);
     try {
-      final resp = await apiService.getUserMe();
+      final UserResponseDto resp = await apiService.getUserMe();
       print(resp.user);
       userName.add(resp.user.username);
       if (resp.user.image == null) {
@@ -79,11 +77,6 @@ class ProfileViewModel {
       }
       originalList = resp.user.posts;
       userPosts.add(resp.user.posts);
-      print("__________________");
-      print("post =>${userPosts.value}");
-      print("userName =>${userName.value}");
-      print("image =>${userImage.value}");
-      print("__________________");
       isLoadingFunc(false);
     } on DioError catch (error) {
       if (error.type != DioErrorType.DEFAULT) {

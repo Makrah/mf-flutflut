@@ -1,16 +1,17 @@
 
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
 import 'package:mappin/src/api/ApiService.dart';
 import 'package:mappin/src/api/Dto/GeoPointDto.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-import 'package:google_maps_flutter/google_maps_flutter.dart' as map;
 
 class MapViewModel {
   final ApiService apiService = ApiService();

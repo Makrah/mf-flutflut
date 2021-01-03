@@ -17,17 +17,17 @@ class CommentCellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: colors.commentBg,
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Row(
                 children: <Widget>[
                   ClipOval(
@@ -60,7 +60,7 @@ class CommentCellWidget extends StatelessWidget {
             width: double.infinity,
             child: Text(
               _comment.content,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: fonts.primaryFF,
                 fontSize: 12,
                 fontWeight: fonts.light,

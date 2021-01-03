@@ -6,7 +6,6 @@ import 'package:mappin/src/pages/LoginScreen.dart';
 import 'package:mappin/src/values/enums.dart';
 import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
-import 'package:mappin/src/values/constants.dart' as app_routes;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key key}) : super(key: key);

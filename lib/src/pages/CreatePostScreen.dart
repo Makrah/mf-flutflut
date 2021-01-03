@@ -3,24 +3,17 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lottie/lottie.dart';
 import 'package:mappin/main.dart';
-import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/values/colors.dart' as colors;
 import 'package:mappin/src/values/enums.dart';
 import 'package:mappin/src/values/font.dart' as fonts;
 import 'package:mappin/src/viewModels/LoginViewModel.dart';
 import 'package:mappin/src/viewModels/ProfileViewModel.dart';
 import 'package:mappin/src/widgets/DisposableWidget.dart';
-import 'package:mappin/src/widgets/profile/ProfileContainerPicture.dart';
-import 'package:mappin/src/widgets/profile/TablayoutProfile.dart';
 import 'package:mappin/src/widgets/CreatePostTextFieldWidget.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -38,7 +31,6 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreenState extends State<CreatePostScreen>
     with DisposableWidget {
-
   final LoginViewModel _loginViewModel = getIt.get<LoginViewModel>();
   final TextEditingController _controllerLatitude = TextEditingController();
   final TextEditingController _controllerLongitude = TextEditingController();
@@ -47,7 +39,7 @@ class _CreatePostScreenState extends State<CreatePostScreen>
   final ProfileViewModel _profileViewModel = getIt.get<ProfileViewModel>();
   final ImagePicker picker = ImagePicker();
 
-  var base64 = "";
+  String base64 = '';
 
   @override
   void initState() {
@@ -93,7 +85,7 @@ class _CreatePostScreenState extends State<CreatePostScreen>
   Future<void> getImage() async {
     try {
       final PickedFile pickedFile =
-      await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+          await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
       setState(() {
         if (pickedFile != null) {
           final Uint8List bytes = io.File(pickedFile.path).readAsBytesSync();
@@ -109,8 +101,10 @@ class _CreatePostScreenState extends State<CreatePostScreen>
 
   @override
   Widget build(BuildContext context) {
+    // ignore: always_declare_return_types
     imageSelectorGallery() async {
-      var galleryFile = await ImagePicker.pickImage(
+      // ignore: deprecated_member_use
+      final io.File galleryFile = await ImagePicker.pickImage(
         source: ImageSource.gallery,
         // maxHeight: 50.0,
         // maxWidth: 50.0,
@@ -119,31 +113,49 @@ class _CreatePostScreenState extends State<CreatePostScreen>
       setState(() {});
     }
 
-
     return PlatformScaffold(
         body: SingleChildScrollView(
             child: SafeArea(
                 child: Container(
                     margin: const EdgeInsets.only(left: 10.0, right: 10.0),
-                    child: Column(
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.only(
-                                left: 20, right: 20, top: 40),
-                            child: HeaderProfilBis(
-                              loginViewModel: _loginViewModel,
+                    child: Column(children: <Widget>[
+                      Container(
+                        margin:
+                            const EdgeInsets.only(left: 20, right: 20, top: 40),
+                        child: HeaderProfilBis(
+                          loginViewModel: _loginViewModel,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        width: double.infinity,
+                        child: PlatformButton(
+                          color: colors.primaryTransparentColor,
+                          height: 60,
+                          borderRadius: 12,
+                          child: const Text(
+                            'Take picture',
+                            style: TextStyle(
+                              fontFamily: fonts.primaryFF,
+                              color: colors.labelColor,
+                              fontWeight: fonts.bold,
+                              fontSize: 16,
                             ),
                           ),
-
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 20),
-                            width: double.infinity,
-                            child: PlatformButton(
+                          onPress: () {
+                            imageSelectorGallery();
+                          },
+                        ),
+                      ),
+                      Container(
+                          margin: const EdgeInsets.symmetric(vertical: 20),
+                          width: double.infinity,
+                          child: PlatformButton(
                               color: colors.primaryTransparentColor,
                               height: 60,
                               borderRadius: 12,
                               child: const Text(
-                                'Take picture',
+                                'Get my location',
                                 style: TextStyle(
                                   fontFamily: fonts.primaryFF,
                                   color: colors.labelColor,
@@ -151,117 +163,88 @@ class _CreatePostScreenState extends State<CreatePostScreen>
                                   fontSize: 16,
                                 ),
                               ),
-                              onPress: () {
-                                imageSelectorGallery();
-                              },
+                              onPress: () async {
+                                await getCurrentLocation();
+                              })),
+                      Hero(
+                          tag: 'tfLatitude',
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: CreatePostTextFieldWidget(
+                              controllerText: _controllerLatitude,
+                              placeholder: 'Latitude',
+                            ),
+                          )),
+                      Hero(
+                          tag: 'tfLongitude',
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: CreatePostTextFieldWidget(
+                              controllerText: _controllerLongitude,
+                              placeholder: 'Longitude',
+                            ),
+                          )),
+                      Hero(
+                        tag: 'tfTitle',
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: CreatePostTextFieldWidget(
+                            controllerText: _controllerTitle,
+                            placeholder: 'Title',
+                          ),
+                        ),
+                      ),
+                      Hero(
+                        tag: 'tfDescription',
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: CreatePostTextFieldWidget(
+                            controllerText: _controllerDescription,
+                            placeholder: 'Description',
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        width: double.infinity,
+                        child: PlatformButton(
+                          color: colors.primaryTransparentColor,
+                          height: 60,
+                          borderRadius: 12,
+                          child: const Text(
+                            'Post it !',
+                            style: TextStyle(
+                              fontFamily: fonts.primaryFF,
+                              color: colors.labelColor,
+                              fontWeight: fonts.bold,
+                              fontSize: 16,
                             ),
                           ),
-
-                          Container(
-                              margin: const EdgeInsets.symmetric(vertical: 20),
-                              width: double.infinity,
-                              child: PlatformButton(
-                                  color: colors.primaryTransparentColor,
-                                  height: 60,
-                                  borderRadius: 12,
-                                  child: const Text(
-                                    'Get my location',
-                                    style: TextStyle(
-                                      fontFamily: fonts.primaryFF,
-                                      color: colors.labelColor,
-                                      fontWeight: fonts.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  onPress: () async {
-                                    await getCurrentLocation();
-                                  })
-                          ),
-                          Hero(
-                              tag: 'tfLatitude',
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: CreatePostTextFieldWidget(
-                                  controllerText: _controllerLatitude,
-                                  placeholder: 'Latitude',
-                                ),
-                              )
-                          ),
-                          Hero(
-                              tag: 'tfLongitude',
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: CreatePostTextFieldWidget(
-                                  controllerText: _controllerLongitude,
-                                  placeholder: 'Longitude',
-                                ),
-                              )
-                          ),
-                          Hero(
-                            tag: 'tfTitle',
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: CreatePostTextFieldWidget(
-                                controllerText: _controllerTitle,
-                                placeholder: 'Title',
-                              ),
-                            ),
-                          ),
-                          Hero(
-                            tag: 'tfDescription',
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: CreatePostTextFieldWidget(
-                                controllerText: _controllerDescription,
-                                placeholder: 'Description',
-                              ),
-                            ),
-                          ),
-
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 20),
-                            width: double.infinity,
-                            child: PlatformButton(
-                              color: colors.primaryTransparentColor,
-                              height: 60,
-                              borderRadius: 12,
-                              child: const Text(
-                                'Post it !',
-                                style: TextStyle(
-                                  fontFamily: fonts.primaryFF,
-                                  color: colors.labelColor,
-                                  fontWeight: fonts.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              onPress: () {
-                                setState(() {});
-                                if (base64 == "" || base64 == null) {
-                                  EdgeAlert.show(
-                                    context,
-                                    title: 'Error',
-                                    description: 'No image selected',
-                                    gravity: EdgeAlert.TOP,
-                                    backgroundColor: colors.alerterErrorColor,
-                                  );
-                                } else
-                                  _profileViewModel.createPost(
-                                      _controllerLatitude.text,
-                                      _controllerLongitude.text,
-                                      _controllerTitle.text,
-                                      _controllerDescription.text, base64);
-                              },
-                            ),
-                          ),
-
-                        ]
-                    )
-                )
-            )));
+                          onPress: () {
+                            setState(() {});
+                            if (base64 == '' || base64 == null) {
+                              EdgeAlert.show(
+                                context,
+                                title: 'Error',
+                                description: 'No image selected',
+                                gravity: EdgeAlert.TOP,
+                                backgroundColor: colors.alerterErrorColor,
+                              );
+                            } else
+                              _profileViewModel.createPost(
+                                  _controllerLatitude.text,
+                                  _controllerLongitude.text,
+                                  _controllerTitle.text,
+                                  _controllerDescription.text,
+                                  base64);
+                          },
+                        ),
+                      ),
+                    ])))));
   }
 
   Future<void> getCurrentLocation() async {
-    print("position");
+    print('cposition');
     final Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     _controllerLatitude.text = position.latitude.toString();
@@ -288,8 +271,8 @@ class _HeaderProfilBisState extends State<HeaderProfilBis> {
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const Text(
+              children: const <Widget>[
+                Text(
                   'Post',
                   style: TextStyle(
                     fontFamily: fonts.primaryFF,

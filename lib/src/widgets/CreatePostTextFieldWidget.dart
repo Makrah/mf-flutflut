@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mappin/src/widgets/platforms/PlatformTextField.dart';
 
 class CreatePostTextFieldWidget extends StatelessWidget {
@@ -23,10 +22,9 @@ class CreatePostTextFieldWidget extends StatelessWidget {
           const SizedBox(width: 20),
           Expanded(
             child: PlatformTextField(
-              placeholder: _placeholder,
-              controller: _controllerText,
-              isPassword: false
-            ),
+                placeholder: _placeholder,
+                controller: _controllerText,
+                isPassword: false),
           ),
         ],
       ),

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mappin/src/api/Dto/PostDto.dart';
 import 'package:mappin/src/api/Dto/UserDto.dart';
-import 'package:mappin/src/api/Dto/GeoPointDto.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:mappin/src/api/ApiService.dart';
 import 'package:mappin/src/values/enums.dart';
@@ -32,20 +31,22 @@ class ProfileViewModel {
 
   void setupLikes() {
     final List<PostDto> newList = <PostDto>[];
-    originalList.forEach((PostDto element) {
+    originalList.toList().forEach((PostDto element) {
       newList.add(element);
     });
-    newList.sort((PostDto a, PostDto b) => a.likes.length.compareTo(b.likes.length));
+    newList.sort(
+        (PostDto a, PostDto b) => a.likes.length.compareTo(b.likes.length));
     userPosts.add(newList.reversed.toList());
     step = 1;
   }
 
   void setupComments() {
     final List<PostDto> newList = <PostDto>[];
-    originalList.forEach((PostDto element) {
+    originalList.toList().forEach((PostDto element) {
       newList.add(element);
     });
-    newList.sort((PostDto a, PostDto b) => a.comments.length.compareTo(b.comments.length));
+    newList.sort((PostDto a, PostDto b) =>
+        a.comments.length.compareTo(b.comments.length));
     userPosts.add(newList.reversed.toList());
     step = 2;
   }
@@ -65,9 +66,9 @@ class ProfileViewModel {
     }
   }
 
-  Future<void> createPost(String latitude, String longitude, String title, String description, String image) async {
+  Future<void> createPost(String latitude, String longitude, String title,
+      String description, String image) async {
     try {
-      final resp = await apiService.createPost(new CreatePostDto(image, title, description, GeoPointDto(double.parse(latitude), double.parse(longitude))));
       profilState.add(ProfileState.success);
     } on DioError catch (error) {
       if (error.type != DioErrorType.DEFAULT) {

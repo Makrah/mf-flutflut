@@ -1,15 +1,10 @@
-
 enum AuthState {
   authent,
   unauthent,
   splash,
 }
 
-enum LoginState {
-  success,
-  error,
-  noInternet
-}
+enum LoginState { success, error, noInternet }
 
 enum SignupState {
   success,
@@ -19,3 +14,5 @@ enum SignupState {
   passwordsDontMatch,
   noInternet
 }
+
+enum ProfileState { success, error, noInternet }

@@ -18,3 +18,7 @@ const Color canvasColor = Colors.transparent;
 const Color alerterErrorColor = Colors.red;
 const Color alerterSuccessColor = Colors.green;
 const Color alerterInfoColor = Colors.grey;
+
+const Color yellowColor = Color(0xFFFFC542);
+
+const Color cardColorPicture = Color(0xFF96A7AF);

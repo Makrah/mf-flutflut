@@ -53,18 +53,4 @@ class LoginViewModel {
     }
     isLoading.add(false);
   }
-
-  // void getUserMe() async {
-  //   try {
-  //     final resp = await apiService.getUserMe();
-  //     print(resp.user.username);
-  //   } on DioError catch (error) {
-  //     if (error.type != DioErrorType.DEFAULT) {
-  //       // No internet
-  //     } else {
-  //       // print("Error ------> ${error.response.statusCode}");
-  //     }
-  //     loginState.add(LoginState.error);
-  //   }
-  // }
 }
